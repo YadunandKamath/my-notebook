@@ -1,0 +1,261 @@
+* LabVantage - Laboratory Information Management System [LIMS]
+
+* LIMS 
+	- software that allows effective management of samples and data through automation.
+	- Features 
+		+ Sample management
+		+ Quality assurance
+		+ Inventory management
+		+ Instrumentation
+		+ Reporting
+		+ Workflow management 
+        + Invoicing
+
+* Key Features of LabVantage:
+	- digital with new UI
+	- automated
+	- can be integrated with customer lab specific instruments
+	- low maintenance & training costs
+	- single, unified LIMS platform with:
+		+ Electronic Laboratory Notebook (ELN)
+		+ Laboratory Execution System (LES)
+		+ Scientific Data Management System (SDMS)
+		+ Advanced Analytics
+	- HTML5 compliant browser-based system
+	- uses JEE servers and modern databases
+	- scalable multi-tier architecture
+		1> Presentation Tier - via web browser
+		2> Application Tier - JEE servers
+		3> Data Tier - database server (Oracle SQL/Microsoft SQL Server)
+	- meta-data driven architecture
+	- zero footprint
+	- Formulations - easy data retrieval, archival and storage
+	- Bio Banking, Barcoding
+	- Jasper reporting
+
+* Extra Features:
+	1) Sample Lifecycle
+		+ Sample management
+		+ Batch management
+		+ Analytical Quality control
+		+ Reagents and Standards management
+	2) Laboratory Execution
+		+ Instrument management
+		+ Analyst Certification
+		+ Workflow Designer
+	3) Data retrieval
+		+ Reporting
+		+ Dashboards
+
+* Administration User Groups (sitemaps):
+	- Homepage consists of these sitemaps and what is seen differs based on roles and job types and access x
+	1) LIMS admin - day-to-day data management
+		-- Tram Lines
+			= Samples
+			= Tests
+			= Batches
+			= Reports
+	2) Lab admin - used by lab admins to set master data 
+		-- Tram Lines
+			= Tests
+			= Process
+			= Storage
+			= Templates
+			
+	3) System admin - sitemap for configurations related activities
+		-- Tram Lines 
+			= Security
+			= Configuration
+			= Monitoring
+			= Web Page Designer 
+			= Reporting
+			= Workflows
+
+* LabVantage Master Data - core, top-level, non-transactional, static data that defines the structure of the system.
+
+* Sample Lifecycle:
+	- any product is called sample.
+	- Sample Management:
+		Sample Submission >>
+		Receive and Register samples >>
+		Print labels >>
+		Create tests >>
+		Enter results >>
+		Validate results >>
+		Appropriate results >>
+		Report results
+	- Sample Status Transition:
+		Initial
+		Initial -> Received/Cancelled
+		Initial -> InProgress / Received -> InProgress
+		InProgress -> Completed
+		Completed -> Reviewed
+
+* Parameter: 
+	- variable that holds some value based on which tests can be performed
+	- represents a property/condition to be tested 
+	- group of parameters form Parameter List 
+	-- Transformation rule 
+	-- Calculation rule 
+	-- Display format
+	-- Parameter limit and Limit rule 
+	-- Specification and Specification Rule
+	-- Instrument 
+	-- Analyst 
+	
+* Test Methods - contains Parameter Lists, Specifications and instructions to perform test 
+
+* QC Batch Creation 
+	- create a Batch instance in LV database and choose QC Method and Samples to be tested 
+	- an Analyst or Department can be assigned to a QC Batch 
+	- results can be entered manually or from instruments
+
+* QC Batch Evaluation 
+	- checks whether batch follows Evaluation rule 
+	- Control charts can be used to identify variations in a process
+
+* Batch:
+  - a batch is a lot of any product that needs to be tested/group of samples that needs to be tested using same methods
+  -- Sampling plan - defines no of batch samples created and tests to be performed
+  -- Product variant - supplier/manufacturer of a product
+  -- Product variant rule - level of testing conducted
+	
+* Version 
+	- defines status of an entity
+		-- Provisional - in process of being revised
+		-- Current - approved
+		-- Active - previous approved version that can still be used '
+		-- Expired - no longer usable
+		
+* Template - predefine every attribute about a sample/test
+	
+* Track Item - an ID used to track samples in LIMS
+
+* Consumables
+	- single/mixture of chemical entities
+		-- Consumable Type 
+		-- Consumable Container
+
+* Sapphire Data Collection (SDC) 
+	- group of records in one or more database tables that collectively define an entity associated with data.
+	- Types:
+		+ "Core" and "System" provide essential functionality (OOB - Out Of the Box). 
+			-- cannot be created or deleted. Can only be viewed and SDIs can be added.
+		+ "User" is created by us.
+			-- all operations possible.
+		+ "Definition" defines information and links relevant to specific operations.
+	- System Admin Menu -> Configuration Tram Line -> SDC Tram Stop (shows list page of all SDCs)
+	- SDC naming convention is same as Java class naming convention 
+	- Under Security/Update Options tab 
+		-- Access Control
+			+ Open Role
+			+ Restrictive Role 
+			+ Departmental
+			+ SDI Security
+			+ Not Implemented
+		-- Audit Method
+		-- Versioned
+		-- Key Generation
+	? why can't we add delete button for SDC 
+
+* Sapphire Data Item (SDI) 
+	- group of records that collectively define an item belonging to an SDC
+	- row
+
+* A_SDCname - audit table for an SDC which stores any changes made in SDC if Audit method is enabled 
+
+* Stability Study 
+	- defines self-life of product
+	- Types:
+		1> Accelerated
+		2> Intermediate
+		3> Long Term
+
+* User is someone who is granted access to LabVantage. 
+  Users are configured and maintained from User List page on Security Tram line of System Admin sitemap. 
+
+	- User Types:
+		1> Access
+			+ Full - no restrictions on access
+			+ Virtual - can only access virtual pages
+			+ External App User - can only access LabVantage APIs
+			+ Unnamed - no access
+		2> License Type
+			+ Named - restricts maximum number of accounts to create
+			+ Concurrent - restricts current number of user connections
+
+* Roles restrict access and operations performed on samples. These apply to LabVantage Users who are members of that role.
+  Roles are assigned to Users on the User Roles tab of User Maintenance page. 
+
+* Security Types:
+	1) User - User Role must be selected
+	2) Job Type - collection of roles. User Job Type must be selected. User can have more than 1 job type.
+  
+* Authentication Type 
+	1) Internal - log-in page 
+	2) External - LDAP servers
+
+* Departmental Security - User restrictions based on the department that the user belongs to.
+
+* SDI Security - allows admins to grant a set of Users, Job Types or Departments to perform operations on selected samples. 
+
+* Module - discrete block of functionality accessible only by specified LabVantage Users.
+
+* Module Users - allows assigning of different modules to different users.
+
+* SDC Access - access to tram lines, site maps, tram stops, pages, etc.
+
+* Multi-Tier Security:
+  User Type restrictions -> Module Access restrictions -> Role/Job Types -> Departmental Security Access
+
+* LabVantage Pages:
+	- WPDPro allows creation of data-driven page and view, edit, etc.
+	- WPDStd allows only viewing or editing properties of existing pages
+	- Page types:
+		+ List Page - page where records are shown
+		+ Maintenance Page - page where records can be entered
+		+ View Page - non-editable Maintenance Pages
+		+ Lookup Page - used to select data. Radio button for Single select, Checkbox for Multi select
+		+ Audit Page - modifications done on the samples can be viewed here (audit details)
+	- Page Creation: [New Page Wizard]
+		+ Register a custom JSP page
+		+ Run Quick Page Creation Wizard
+		+ Create new page that modifies the properties of existing page
+		+ Create data-driven page
+
+* Breadcrumb bar:
+	- directly beneath top Menu bar 
+	-- Recent History - navigation of recent items 
+	-- Related Items
+	
+* Dashboards 
+	- display discrete collections of information within a single page
+	- configured and driven by Gizmos 
+	- Menu picker Gizmo -> Create Dashboard
+		-- Samples Dashboard - collects and displays sample information
+		-- Connection Dashboard - collects and displays connections information
+		-- Testing Dashboard - collects and displays information about Tests, Instruments, and Analysts
+		-- My Dashboard -  collect and display Bulletin, Sitemap, and Workflow information
+		
+* Category - logical group of SDIs related to same SDC 
+	
+* Interfaces supported by LabVantage:
+	- AttachmentHandler
+	- DBAccess
+	- LogonRequestValidator
+	
+* Gizmos 
+	- SDIs that define dynamic object-oriented blocks of functionality that can be plugged into different parts of the 
+	application to expose functionality
+	- To create a Gizmo SDI, go to the Gizmo List page (System Admin → Web Page Designer → Gizmos), then add a Gizmo by clicking "Add".
+	
+* SDC/Custom Business Rule 
+	- any class extending BaseSDCRules
+	- class file name must be same as SDC name 
+	- preMethods are used for validation
+	- postMethods are used tasks and actions
+
+
+Custom Action 
+
+ajax

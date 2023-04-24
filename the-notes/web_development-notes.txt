@@ -1,0 +1,457 @@
+----------------------------------------------- WEB DEVELOPMENT BOOTCAMP ---------------------------------------------
+
+$ RESOURCES $
+
+	* https://www.appbrewery.co/p/web-development-course-resources = course resources
+
+	@ Additional Aide
+		* https://codepen.io/ = build & test front-end code 
+		* https://www.keybr.com/ = improve typing speed
+		* https://rlab.cs.dartmouth.edu/devin/ = Devin Balkcom Personal Site
+		* https://www.cs.dartmouth.edu/~thc/ = Thomas Cormen Personal Site
+		* https://www-cs-faculty.stanford.edu/~knuth/ = Donald Knuth Personal Site
+		* http://www.cs.cornell.edu/home/kleinber/ = Jon Kleiner Personal Site
+		* https://www.pascalvangemert.nl/#/experiences = Pascal Van Gemert Online CV
+		* https://appbrewery.github.io/css-inspection/
+		* https://appbrewery.github.io/box-model/
+		* https://appbrewery.github.io/css-positioning/
+		* https://appbrewery.github.io/css-display/
+		* https://appbrewery.github.io/flex-layout/
+		* https://appbrewery.github.io/flexbox-sizing-exercise/
+		* https://appbrewery.github.io/flexboxfroggy/
+		* https://appbrewery.github.io/grid-sizing/
+
+	@ Design 
+		* https://colorhunt.co/ = Color Palettes
+		* https://www.favicon.cc/ = create Favicons
+		* https://lipsum.com/ = Lorem Ipsum content for placeholder
+		* https://picsum.photos/ = Lorem Ipsum for photos
+		* https://fonts.google.com = browse font styles
+		* http://redmelondesign.com/index.html/
+		* http://diana-adrianne.com/purecss-lace/
+		* https://pattle.github.io/simpsons-in-css/
+		
+	@ Documentations
+		* https://developer.mozilla.org/en-US/docs/Web/HTML = HTML documentation (MDN)
+		* https://www.w3schools.com/html/ = HTML documentation (W3)
+		* https://developer.mozilla.org/en-US/docs/Learn/CSS = CSS Documentation (MDN)
+		* https://devdocs.io/ = multiple API documentations
+		* https://docs.emmet.io/cheat-sheet/ = Emmet documentation
+		* https://web.stanford.edu/group/csp/cs21/htmlcheatsheet.pdf = Stanford HTML Cheatsheet
+		
+	@ Extensions
+		* https://chrome.google.com/webstore/detail/pesticide-for-chrome/bakpbgckdnepkmkeaiomhmfcnejndkbi = Pesticide Chrome Extension
+		* https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa/related = JSON Formatter Extension
+		
+	@ Extra Information
+		* https://www.nslookup.io/ = lookup DNS records for a domain name
+		* https://www.submarinecablemap.com/ = map of underwater cables
+		* https://www.producthunt.com/ = discover new tech products
+		
+	@ Fun
+		* https://www.smashthewalls.com 
+		* https://hackertyper.com 
+		* https://stellarium-web.org
+		
+	@ Shortcuts
+		* [Windows + Shift + S] = Snipping tool
+		* [Windows + .] = Emoji keyboard
+		* [Ctrl + Shift + I] = Browser Developer Tools
+________________________________________________________________________________________________________________________________________________
+
+-- Working of Internet:-
+
+	-> URL request in browser
+	-> Client machine forwards request to ISP [Internet Service Provider]
+	-> ISP relays request to DNS [Domain Name System] server (analogous to a phone book)
+	-> DNS searches for IP address of the website in its database and returns it 
+	-> Using IP address, direct connection can be made with the server 
+	
+	
+-- Working of Websites:-
+
+	-> consists of 3 types of files:
+		1> HTML - responsible for website content
+		2> CSS - responsible for website styling
+		3> Javascript - responsible for website functionality
+		
+	-> these 3 files are sent by the server and rendered on the client machine by browser to view the website
+	
+	-> Website - collection of webpages
+	
+	-> Web Hosting 
+		- process of making a website available anywhere on the internet
+		- this is done by making the website available on a Web Server
+		
+----------------------------------------------------------------------------------------------------------------------
+
+File Paths:-
+
+	* File Paths are used to specify the location of a file/folder
+
+		1> Absolute File Path 
+			- gives location of file starting from root folder 
+			
+		2> Relative File Path
+			- gives location of file with respect to current working folder 
+			- use "./" to search in the same level as current file
+			- use "../" to search one level upper than the current file 
+ 
+----------------------------------------------------------------------------------------------------------------------
+
+HTML:-
+
+	* HyperText Markup Language
+	* HyperText is a text which contains links to other texts 
+	* Markup is done using HTML Tags
+	* HTML defines the content and structure of a website
+	* a website can be created with only HTML file, but not with only CSS or Javascript file
+	
+	
+	-- HTML Tags & Elements:
+	
+		* Tags request the browser to structure content in a specific way
+		* Syntax: <tag  attribute=value> content </tag>
+		* HTML tag along with the content is together called a HTML Element.
+		* Void Elements - HTML tags without any content 
+		
+		> Heading tags 
+			- used to mark text as heading
+			- heading fonts: <h1> to <h6> (h1 is largest and h6 is smallest) 
+			
+		> Line break 
+			- <br>
+			- self-closing tag 
+			- void element
+			
+		> Horizontal Rule
+			- <hr>
+			- self-closing tag
+			- void element
+		
+		> Align center
+			- <center>
+			
+		> Comment
+			- <!--  comment text  -->
+			- multi line comment
+			
+		> Paragraph
+			- format text as a paragraph with new line 
+			- block-level element
+			
+		> Content Span 
+			- <span> Content </span>
+			- inline element
+			
+		> Lists
+			- <ul> unordered list (rendered as bullet list)
+			- <ol> ordered list 
+			- <li> is used for list items
+			
+		> Anchor tag
+			- used to format text as hyperlinks
+			- <a href="URL"> Link text </a>
+			
+		> Tables
+			- <table> - every table element is written within this tag 
+			- <tr> - crates a table row
+			- <td> - insert table data as a column
+			- <thead> - header section of table 
+			- <th> - inserts header values
+			- <tfoot> - footer section of table
+			
+		> Image 
+			- add image from a URL 
+			- <img src="url" alt="name"/>
+			- self-closing tag 
+			- void element
+			
+			
+	-- HTML Boilerplate:
+	
+		<!DOCTYPE html>						<- specifies HTML version to the browser
+		<html lang="en>						<- root element under which everything else is written
+			<head>							<- contains important information about the website 
+				<meta charset="UTF8">
+				<title>
+					Website Title
+				</title>
+			</head>
+			<body>							<- all the content goes here
+				<h1> Hello World</h1>
+			</body>
+		</html>
+		
+----------------------------------------------------------------------------------------------------------------------
+
+CSS:-
+
+	* Cascading Style Sheets
+	* CSS Syntax: selector{	property:value; }
+	
+	-- Adding CSS:
+		
+		1> Inline CSS 
+			- add style for HTML element inline using "style" attribute
+			- <tag style="css">
+			- useful for a single element
+		
+		2> Internal CSS 
+			- CSS styling is included in HTML file within <head> tag 
+			- <style>css</style>
+			- useful for a single webpage 
+		
+		3> External CSS 
+			- CSS styling is written in a separate CSS file 
+			- <link href="style.css"/>
+			- useful for multi-page website 
+		
+		* Preference: Inline > Internal > External
+	
+		
+	-- CSS Selectors:
+	
+		> Tag/Element Selectors
+		
+		> Class Selectors 
+			- made more specific using "class" attribute
+			- used to group related elements 
+			- multiple elements can have same classname and multiple classnames
+			- .classname{}
+			
+		> ID Selectors
+			- made more specific using "ID" attribute
+			- ID must be unique and only one can be specified; can be used to identify elements
+			- #ID{}
+			
+		> Attribute Selectors
+			- used to select elements with particular attributes
+			- element[attribute]{}
+			
+		> Select-all Selector 
+			- *{}
+			
+	
+	-- Content Division Element:
+		- used to group and structure content 
+		- has no effect on the content/layout until styled using CSS
+		- <div class="">
+		
+	
+	-- CSS Box Model:
+		> margin 
+			- space between other elements
+		> border 
+			- border around the element 
+			- border: thickness style color 
+		> padding 
+			- space between content and edges of element which contains it 
+		> content 
+		
+		
+	-- CSS Display Property:
+	
+		> block 
+			- takes up space of the entire width of the page and blocks any other element from coming on the same line 
+			- common block elements: paragraphs, headers, divisions, lists, forms
+			- height and width can be changed
+			
+		> inline
+			- takes up space only as much required by the content 
+			- common inline elements: image, span, anchor
+			- dimensions can't be changed 
+			
+		> inline-block
+			- content goes on same line and dimensions can be changed
+			
+		> none 
+			- hides the element and removes space taken up by the element
+			
+			
+	-- CSS Font Properties:-
+	
+		> font-size:
+		
+			- specified in terms of pixels/points/em/rem/named-font-sizes
+			
+				* 1px = (1/96th)inch = 0.26mm in height and width 
+				* 1pt = (1/72nd)inch = 0.35mm in height and width
+				* 1em = 1 X 100% of parent size 
+				* 1rem = 1 X 100% of root size
+			
+		> font-weight:
+		
+			- keywords
+				* normal
+				* bold
+				
+			- keywords relative to parent
+				* lighter (-100)
+				* bolder (+100)
+				
+			- number
+				* 100 to 900 (light to bold)
+				* 400 - normal 
+				* 700 - bold 
+			
+		> font-family:
+			* font-family-name, generic-family-name 
+			
+		> text-align:
+			- sets horizontal alignment of the inline-level content inside a block element or table-cell box
+		
+		
+	-- CSS Cascade (Rules Preference):-
+	
+		1> Position - the lower the rule is in the file, the more preference it gets
+		
+		2> Specificity - ID selector > Attribute selector > Class selector > Element selector
+		
+		3> Type - Inline >  Internal > External  
+			
+		4> Importance - using "!important" in the rule gives it the highest preference
+		
+		* Preference: 4 > 3 > 2 > 1
+		
+	
+	-- Combining CSS Selectors:-
+	
+		> Group: selector, selector{ }
+		
+		> Child: selector(parent) > selector(child){ }
+		
+		> Descendant: selector(ancestor) selector(descendant){ }
+		
+		> Chaining: selectorselector{ }
+		
+		> Combining Combiners: selector selectorselector{ }
+		
+		
+	-- CSS Positioning:-
+	
+		> Static positioning
+			* HTML default
+		
+		> Relative 
+			* position relative to default position 
+		
+		> Absolute
+			* position relative to nearest positioned ancestor or top left corner of the webpage 
+			* can be set above or below other elements using z-index 
+		
+		> Fixed
+			* position relative to the top left corner of browser window
+			
+			
+	-- CSS Float and Clear:
+	
+		* float
+			- floats an element to the left or right and allows text and inline elements to wrap around it
+		
+		* clear
+			- avoids an element from getting wrapped due to float
+			
+			
+	-- Responsive Website Design:
+	
+		- websites must adapt to changes in screen sizes 
+		
+		> Media Queries
+			- applies CSS styles depending on the presence or value of device characteristics	
+		
+		> CSS Grid
+		
+		> CSS Flexbox
+		
+		> Bootstrap Framework
+		
+	
+	-- CSS Flexbox:
+	
+		* flexible box
+		* one-dimensional layout model 
+		* put all elements in a container div and set the display style as flex for that container
+
+		> flex-direction:
+			- changes the direction of main-axis 
+			* row (default)
+			* column
+		
+		> flex-basis:
+			- sets the size of the flex items 
+			- cannot be placed in the container style 
+		
+		> Flex Layout:
+		
+			-> order : number 
+				- used to set the order of the flex items 
+			
+			-> flex-wrap: nowrap (default) /  wrap 
+				- used to wrap flex items 
+				- used on the flex container
+			
+			-> justify-content:
+				- distributes flex items along main-axis
+				- set on the container style 
+					* flex-start 
+					* flex-end 
+					* center 
+					* space-between 
+			
+			-> align-items 
+				- distributes flex items along cross axis 
+				- set on the container style 
+				- works with nowrap 
+				- works only if container height is sufficient
+				- height : 70vh [viewport height - window size]
+					* flex-start 
+					* flex-end 
+					* center
+					* baseline
+					
+			-> align-self 
+				- similar to align-items but set on flex items 
+			
+			-> align-content 
+				- sets how multiple lines are spaced apart from each other
+				- has no effect when there is only one line
+				- works with wrap 
+					* flex-start 
+					* flex-end 
+					* center
+					* baseline 	
+
+			-> flex-flow: row wrap
+				- shorthand for the two properties: flex-direction and flex-wrap
+				- accepts the value of the two properties separated by a space
+				
+		> Flex Sizing:
+	
+			- min-width/max-width > flex-basis > Width > Content width
+		
+			-> flex-grow & flex-shrink
+				* 0 (off)
+				* 1 (on)
+			
+			-> flex : 1(grow) 1(shrink) 0(basis)
+			
+			
+	-- CSS Grid:
+	
+		* two-dimensional layout system
+		* put all elements in a container div and set the display style as grid for that container
+		
+			> Grid Sizing
+				
+				-> grid-template: rows / columns
+					* used to define size and number of rows and columns 
+					* use repeat(no. of rows/columns, size of rows/columns)
+					
+				-> grid-auto-rows/columns : size 
+					* automatically sets the size when additional rows/columns are added in future 
+					
+					
+		
+		
+----------------------------------------------------------------------------------------------------------------------

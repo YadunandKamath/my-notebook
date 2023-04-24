@@ -1,0 +1,1246 @@
+
+Resources: https://www.youtube.com/playlist?list=PLd3UqWTnYXOmx_J1774ukG_rvrpyWczm0
+
+-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=--=-==--=-=-==-=--==--=-==-=-=-=-=-=-=--=-==--=-==-=--==-=--==--=-==-=-=-=-=--=-==-=-=-=-=-=-
+
+* JDK (Java Development Kit) - software development environment which consists of:
+  JRE, compiler(javac), archiver(jar), javadocs and other development tools.
+
+* JRE (Java Runtime Environment) - consists of JVM and core classes to execute java applications. 
+  Provides an environment only to run java applications. It is the implementation of JVM.
+
+JVM (Java Virtual Machine) 
+	- inbuilt in both JRE and JDK
+	- it is the interpreter
+	- it executes the bytecode
+	- it is platform dependent
+
+>> java -version
+>> javac -version
+>> mvn -v
+
+
+* The following actions occur at runtime as listed below:
+	-> Class Loader
+	-> Byte Code Verifier
+	-> Interpreter
+		- Execute the Byte Code
+		- Make appropriate calls to the underlying hardware
+
+* Types of methods in Java:
+	1> Instance methods - associated with objects
+	2> Static methods - associated with class 
+	
+-------------------------------------------------------------------------------------------------------------------------------
+
+OOPS:-
+
+* Inheritance:
+	- sub/child class inherits properties of super/parent class using "extends" keyword.
+	- Multiple Inheritance not allowed because it confuses compiler about which class properties to inherit. 
+	(Diamond Ambiguity problem)
+	- We can inherit static and final methods. However, we cannot override them.
+
+* Polymorphism:
+	- perform single action in different ways.
+	- Types:
+		1) Compile-time - method overloading(same method name, different parameters)
+		2) Run-time - method overriding. IS-A relationship(inheritance) is required.
+			Method must have same name and parameters.
+
+* Abstraction:
+	- hiding unnecessary details and only showing functionality.
+	- Abstract method - declared without implementation.
+	- Abstract Class - can have both abstract and concrete methods.
+					- default methods not allowed but static methods allowed.
+					- classes that extend Abstract class must be defined in their own files.
+	- Interface - allows abstract methods with and without "abstract" keyword.
+				- concrete methods must use "static" or "default" keywords.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Exception Handling:-
+
+	- Exception is an abnormal event that interrupts the normal flow of the program.
+	- java.lang.Throwable class is the root class of Java Exception hierarchy.
+	- Inherited by two subclasses: Exception and Error.
+	- try, catch, finally, throw, throws
+	- printStackTrace(), getMessage()
+	
+	1) Checked Exception - checked at compile-time
+	2) Unchecked Exception - checked at runtime and inherits RuntimeException.
+	3) Error - irrecoverable
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Java File I/O:-
+
+* Text (character) data -> Readers and Writers; Binary data -> I/O Streams
+
+* File Class: 
+	-- Constructors
+		1> File f = new File(String fname);
+		2> File f = new File(String subdirname, String fname);
+		3> File f = new File(File subdir, String fname);
+	-- Methods
+		+ boolean exists()
+		+ boolean createNewFile()
+		+ boolean mkdir()
+		+ boolean isFile()
+		+ boolean isDirectory()
+		+ String[] list()
+		+ long length()
+		+ boolean delete()
+	
+* FileOutputStream Class 
+	-- Constructors
+		1> FileOutputStream fos = new FileOutputStream(String fname);
+		2> FileOutputStream fos = new FileOutputStream(String name, boolean append);
+		3> FileOutputStream fos = new FileOutputStream(File file);
+		4> FileOutputStream fos = new FileOutputStream(File file, boolean append);
+		
+	-- Methods 
+		+ write(int b)
+		+ write(byte[] b)
+		+ flush()
+		+ close()
+
+* FileInputStream Class 
+	-- Constructors
+		1> FileInputStream fis = new FileInputStream(String name);
+		2> FileInputStream fis = new FileInputStream(File file);
+		
+	-- Methods 
+		+ int read()
+		+ int read(byte[] b)
+		+ close()
+
+* FileWriter Class 
+	+ Constructors
+		- if file does not exist, it will be created
+		+ Override existing data 
+			1> FileWriter fw = new FileWriter(String fname);
+			2> FileWriter fw = new FileWriter(File f);
+		+ Append new data to old data 
+			3> FileWriter fw = new FileWriter(String fname, boolean append);
+			4> FileWriter fw = new FileWriter(File f, boolean append);
+	+ Methods 
+		+ write(int ch)
+		+ write(char[] ch)
+		+ write(String s)
+		+ flush()
+		+ close()
+	+ Limitation - new lines must be inserted manually 
+
+* FileReader Class 
+	+ Constructors
+		1> FileReader fr = new FileReader(String fname);
+		2> FileReader fr = new FileReader(File f);
+	+ Methods 
+		> int read() - returns unicode value of next character. Returns -1 if no more characters are present.
+		> int read(char[] ch) - returns number of characters copied from file to array.
+		> void close()
+	+ Limitation - reads text character by character which is inefficient
+	
+* BufferedWriter Class:
+	- cannot communicate with file directly, requires a writer object
+	+ Constructors
+		1> BufferedWriter bw = new BufferedWriter(Writer w);
+		2> BufferedWriter bw = new BufferedWriter(Writer w, int bufferSize);
+	+ Methods 
+		> write(int ch)
+		> write(char[] ch)
+		> write(String s)
+		> flush()
+		> close()
+		> newLine()
+	+ Limitation 
+		-- need to call newLine() method for every new line insertion
+		-- need to pass int/double/boolean values as String which affects performance
+		
+* BufferedReader Class:
+	+ Constructors 
+		1> BufferedReader br = new BufferedReader(Reader r);
+		2> BufferedReader br = new BufferedReader(Reader r, int bufferSize);
+	+ Methods
+		> int read() 
+		> int read(char[] ch) 
+		> void close()
+		> String readLine() - returns string of text in the entire line. Returns null if no line available
+	
+* PrintWriter Class:
+	- can pass any data type value, not just characters
+	+ Constructors
+		1> PrintWriter pw = new PrintWriter(String fname);
+		2> PrintWriter pw = new PrintWriter(File f);
+		3> PrintWriter pw = new PrintWriter(Writer w);
+	+ Methods 
+		> write(int ch)
+		> write(char[] ch)
+		> write(String s)
+		> flush()
+		> close()
+		> print(value)
+		> println(value)
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Multithreading:-
+
+* Thread - separate flow of execution
+
+* Defining a thread:
+	+ By extending Thread class 
+	+ By implementing Runnable interface 
+	
+* Thread class implements Runnable interface 	
+
+* start() method in Thread class creates and starts a new thread which executes run() method.
+
+* if run() method is called directly without start(), main thread executes the method like a normal method and no new thread is created.
+
+* Actions performed by start() method:
+	+ Register thread with Thread Scheduler
+	+ Perform all other mandatory activities
+	+ Invoke run()
+	
+* Overloading of run() method is possible but start() invokes no-arg run() method only.
+  If run() is not overloaded, Thread class run() is executed which has no implementation. Hence, no output will be generated.
+
+* If start() method is overridden, new thread will not be created and our start() method executes like a normal method.  
+  Therefore, not recommended to override start() method.
+  
+* Thread Lifecycle:
+	1> New/Born state - thread object created
+	2> Ready/Runnable - start() method called 
+	3> Running - if Thread Scheduler allocates processor
+	4> Dead - run() executed
+	
+* Trying to start a thread that has already been started -> IllegalThreadStateException
+
+* Thread Class Constructors:
+	1> Thread t = new Thread();
+	2> Thread t = new Thread(Runnable r);
+	3> Thread t = new Thread(String name);
+	4> Thread t = new Thread(Runnable r, String name);
+	5> Thread t = new Thread(ThreadGroup g, String name);
+	6> Thread t = new Thread(ThreadGroup g, Runnable r);
+	7> Thread t = new Thread(ThreadGroup g, Runnable r, String name);
+	8> Thread t = new Thread(ThreadGroup g, Runnable r, String name, long stackSize);
+
+* Thread Name:
+	- every thread has a default name generated by JVM 
+	> Thread.getName() - returns name of thread which calls this method 
+	> Thread.setName("newName") - sets name of the thread which calls this method 
+
+* Thread Priorities:
+	- Thread Scheduler uses priorities while allocating processor 
+	- if 2 threads have same priority, exact execution order cannot be expected as it depends on Thread Scheduler 
+	> Thread.MIN_PRIORITY = 1
+	> Thread.NORM_PRIORITY = 5
+	> Thread.MAX_PRIORITY = 10
+	> public final int getPriority()
+	> public final void setPriority(int p) 
+		- [1<=p<=10], if p is out of range -> RuntimeException: IllegalArgumentException
+	- default priority for main thread = 5
+	- default priority for all other threads will be inherited from parent thread (not same as parent class) to child thread
+		-- parent thread is the thread which executes the instantiation of chlid thread
+	> yield() 
+		-- informs scheduler to pause current use of processor so that other threads of same priority can make use of the processor
+		-- moves thread from Running to Ready state 
+		-- not final method
+		-- not overloaded
+		-- does not throw IE 
+	> t.join()
+		-- the thread which calls this waits for t to die
+		-- throws IE 
+		> public final void join()
+		> public final void join(long ms) - waits for ms milliseconds only 
+		> public final void join(long ms, int ns)
+	> sleep() 
+		-- used when a thread need not perform any operation for a particular amount of time 
+		-- throws IE 
+		> public static native void sleep(long ms)
+		> public static void sleep(long ms, int ns)
+	- deadlock situations
+		-- if 2 threads call join on each other, then both threads will wait indefinitely and program will be stuck
+		-- if a thread calls join on itself, it will wait indefinitely
+
+* Thread Interruption:
+	- a thread can interrupt a sleeping thread or waiting thread of Thread class 
+	- if target thread not in sleeping or waiting state, interrupt waits till target thread goes into those states
+	> public void interrupt()
+	
+* Synchronization:
+	- if multiple threads try to operate on the same Java object simultaneously, it can lead to data inconsistency problem 
+	- this can be overcome by synchronized keyword 
+	> synchronized 
+		-- modifier only applicable for methods and blocks but not for classes and variables 
+		-- if declared, only one thread will be allowed to execute that method/block on given object 
+		-- Limitation - increases waiting time for threads
+	- it is internally implemented using lock 
+	- every object in Java has a unique lock 
+	- if a thread wants to execute synchronized method on the given object, it uses the lock and releases it 
+	- aquiring and releasing lock occurs internally in JVM
+	- another thread can execute a non-synchronized method while a thread is executing a synchronized method 
+	- update methods can be synchronized while read operations can be non-synchronized
+	- class-level lock is required for static synchronized method and lock is released upon completion of method execution
+	- synchronized block and static synchronized block can be executed simultaneously by 2 threads on the same object 
+	  because the former requires object-level lock while the latter requires class-level lock 
+	- Synchronized block - can be applied to only few lines of code rather than entire method.
+	  It can be declared in 3 ways:
+	  1> using lock of current object 
+		>> synchronized(this){}
+	  2> using lock of particular object 
+		>> synchronized(obj){}
+	  3> using class-level lock
+		>> synchronized(classname.class){}
+		
+* Inter thread communication
+	- 2 threads can communicate with each other by using wait(), notify(), notifyAll() methods
+	- thread expecting updation must call wait() and thread responsible to perform updation must call notify()
+	- these methods are present in Object class but not Thread class 
+	- to call these methods on any object, the thread should have lock of object (thread should be in synchronized area).
+	  Therefore, these methods must be called from synchronized block, or else it's called RE:IllegalMonitorException
+	- if a thread calls wait() on any object, it immediately releases lock of that particular object and goes into waiting state 
+	- no other methods apart from these releases the lock of an object 
+	> public final void wait()
+	> public final native void wait(long ms)
+	> public final void wait(long ms, int ns)
+	> public final native void notify()
+	> public final native void notifyAll()
+	
+* Deadlock 
+	- a condition where 2 threads wait for each other indefinitely
+	- caused by synchronized keyword due to unavailability of locks
+	- long waiting for a thread which never ends 
+
+* Starvation
+	- long waiting for a thread where waiting ends after some time 
+	
+* Daemon threads
+	- threads executing in the background
+	- main purpose is to support non-daemon threads 
+	- examples: Garbage Collector, Attach Listener, Signal Dispatcher
+	> public boolean isDaemon()
+	> public void setDaemon(boolean b)
+	- daemon state for a thread must be changed before it is started else we get IllegalThreadStateException
+	- main thread is non-daemon by default and can never be changed as it is already started by JVM
+	- daemon nature for all other threads will be inherited from parent to child 
+	- once last non-daemon terminates, automatically all daemon threads will be terminated
+	
+* Multithreading in Java can be implemented using 2 models:
+	1> Green Thread Model
+		- thread is completely managed by JVM without any OS support 
+	2> Native OS Model
+		- thread is managed by JVM with underlying OS support 
+		
+* Stopping a thread: 
+	> public void stop() 
+		-- stops thread execution
+		-- upon calling this method, thread immediately enters dead state 
+		-- it is deprecated now and not recommended to use 
+
+* Suspending and resuming a thread:
+	> public void suspend()
+		-- suspends a thread
+		-- upon calling this method, thread immediately enters suspended state 
+	> public void resume()
+		-- resumes a suspended thread 
+		-- upon calling this method, thread continues execution
+	- these methods are deprecated now and not recommended to use 
+	
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Generics: Provides code reuse and type safety.
+// To create an instance of generic class
+BaseType <Type> obj = new BaseType <Type>();
+
+
+Collections:-
+
+* Why collections?
+	- arrays have fixed size 
+	- only holds homogeneous elements
+	
+* 9 key interfaces:
+
+	1> Collection - root interface
+	
+		2> List 
+			- duplicates allowed & insertion order preserved
+			- implementation classes:
+				+ ArrayList - best choice for retreival and worst choice for frequent insertion/deletion in the middle
+				+ LinkedList
+				+ Vector
+					^ Stack
+				
+		3> Set 
+			- no duplicates & insertion order not preserved
+			- implementation classes:
+				+ HashSet
+					^ LinkedHashSet
+				
+			4> SortedSet 
+				- child interface of Set 
+				- elements inserted with sorting order 
+			
+				5> NavigableSet
+					- child interface of SortedSet
+					- implementation class:
+						+ TreeSet 
+					
+		6> Queue
+			- first in first out 
+			- store elements before some processing
+			- implementation classes:
+				+ PriorityQueue
+				+ BlockingQueue
+					^ LinkedBlockingQueue
+					^ PriorityBlockingQueue
+	
+	7> Map 
+		- not child interface of Collection
+		- key-value pairs 
+		- keys must be unique but values can be duplicates
+		- implementation classes:
+			+ HashMap
+				^ LinkedHashMap
+			+ WeakHashMap
+			+ IdentityHashMap
+			+ Hashtable
+				^ Properties
+	
+		8> SortedMap
+			- child interface of Map 
+			- sorted key-value pairs 
+		
+			9> NavigableMap 
+				- utilities for navigation purpose
+				- child interface of SortedMap
+				- implementation class:
+					+ TreeMap
+			
+* Sorting Interfaces:
+	1> Comparable 
+		- default natural sorting order 
+		- belongs to java.lang
+		- compareTo() method 
+	2> Comparator 
+		- customized sorting order 
+		- belongs to java.util
+		- compare() and equal() methods
+		
+	
+* Cursors Interfaces:
+	1> Enumeration
+	2> Iterator - unidirectional
+	3> ListIterator - bidirectional
+
+* Utility Classes:
+	1> Collections
+	2> Arrays
+	
+* Collection vs Collections
+	- Collection is a root interface
+	- Collections is a class which provides utility methods such as sorting 
+
+-- LISTS --
+* Collections.sort(list_name)
+* Collections.copy(list1,list2) - copy list2 to list1
+* Collections.reverse(list_name)
+* Collections.swap(list_name,index1,index2)
+* Iterator i = list_name.listIterator(startIndex);
+  while(i.hasNext()){
+    i.next();
+  }
+
+1) ArrayList:
+	* add(index, obj)
+	* addAll(list_name) - add elements of parameter list to calling list
+	* set(index, obj) - update element
+	* contains(obj) - search
+	* get(index) - get object at index
+	* indexOf(obj) - get index value of object
+	* remove(index/obj)
+	* removeAll(list_name) - empty the list
+	* isEmpty() - check if list is empty
+	* subList(startIndex,endIndex) - retrieves startIndex to (endIndex-1)
+
+2) LinkedList:
+	* list_name.descendingIterator() - print elements in reverse
+	* offerFirst(obj) - add element at front of LinkedList
+	* offerLast(obj) - add element at end of LinkedList
+	* peek()/peekFirst()/getFirst() - get element at front of LinkedList
+	* peekLast()/getLast() - get element at end of LinkedList
+
+3) HashSet: extends AbstractSet and implements Set interface. No duplicates.
+            Determines unique values through hash codes stored in hash table.
+            Allows null. Uses equal() to compare.
+	* List<> list = new ArrayList<>(HashSet); // convert HashSet to ArrayList
+	* String[] new_array = new String[h_set.size()];
+	  h_set.toArray(new_array); // convert HashSet to array
+	* Set<> tree_set = new TreeSet<>(HashSet); // convert to TreeSet
+
+4) TreeSet: implements SortedSet. Uses tree for storage. Elements are sorted.
+            Doesn't allow null (because it uses compareTo() method).
+	* first() - get first element
+	* last() - get last element
+	* headSet(limit) - limit setter
+
+5) PriorityQueue: duplicates allowed, elements are sorted , null not allowed.
+	* poll() - retrieve and remove first element
+	* priority_queue.toString() - convert to string representation
+	* List<> array_list = new ArrayList<>(priority_queue); - convert to ArrayList
+
+-- MAPS --
+* for(Map.Entry x: hash_map.entrySet()) {
+    System.out.println(x.getKey() + " " + x.getValue());
+  }
+* Set<Map.Entry<k,V>> s = hash_map.entrySet();
+  for (Map.Entry<k, V> it: s){}
+
+6) HashMap: key-value pairs
+	* put(key, value)
+	* get(key) - get value for specific key
+	* getKey()
+	* values() - collection view of values
+	* keySet() - set view of keys
+	* entrySet() - set view of mappings
+	* getValue()
+	* clear() - remove all mappings
+	* setValue(value) - sets value for a key in entrySet
+	* containsValue(value)
+	* containsKey(key)
+
+7) TreeMap:
+	* firstEntry()
+	* lastEntry()
+	* descendingKeySet() - keys in descending order
+	* floorEntry(key)/floorKey(key) - returns greatest key-value entry/key less than or equal to given key
+	* ceilingEntry(key)/ceilingKey(key) - returns least key-value entry/key greater than or equal to given key
+	* subMap(fromKey, toKey)
+
+=========================================================================================================================================================================
+
+Java 8 Features:-
+
+1) Lambda Expressions - it is an anonymous function without name, modifiers and return type. It enables functional programming and parallel processing
+	- Type Inference - compiler can guess types of variables in the argument parameters
+	
+* Functional Interface 
+	- interface that contains only one abstract method. 
+	- It can be used to invoke Lambda expressions.
+	- It can have multiple default and static methods.
+	- @FunctionalInterface - compiler ensures that the interface is functional interface by checking if single abstract method is present or not.
+	- Functional interface cannot have multiple abstract methods because it will confuse the compiler while mapping lambda expression to abstract method. 
+	- w.r.t. inheritance:
+		+ child interface can contain no abstract methods
+		+ child interface can contain same parent abstract method 
+		+ child interface can contain multiple abstract methods if @FunctionalInterface annotaton is not used on child interface.
+	Examples:
+		+ Runnable interface - contains only run() method.
+		+ Callable interface - contains only call() method.
+		+ ActionListener interface - contains only actionPerformed().
+		+ Comparable interface - contains only compareTo() method.
+			
+* Lambda expression can replace anonymous inner class only when it implements functional interface.
+
+* Local variable referenced by lambda expression is effectively declared as final.
+
+2) Default & Static Methods inside Interfaces: 
+	- default methods allow interface to have concrete methods with implementation
+	- if two interfaces have default methods with same signature and are implemented by same class (multiple inheritance),
+	  then the method must be overridden. To use default implementation: Interface_name.super.method_name();
+	- static methods can be used inside interfaces to define general utility methods
+	- static methods from interface can only be called using interface name in implementation class because they are not available by default in implementation class 
+	- static methods cannot be overridden 
+	
+3) Predefined Functional Interfaces:
+	
+	- belongs to java.util.function package
+	
+	1> Predicate interface 
+	+ contains abstract method test() which returns boolean value based on some condition
+	+ contains default methods negate(), and(), or() 
+	+ contains static method isEqual()
+	+ and() and or() methods can be used for predicate joining
+	+ 	interface Predicate<T>
+		{
+			boolean Test(T t);
+		}
+		
+	2> Function interface 
+	+ contains abstract method apply() which can perform some operation and return any value 
+	+ contains default methods andThen() and compose() which can be used for Function chaining
+	+ order of application of function is reversed in compose() method 
+	+ contains static method identity() which just returns input value 
+	+	interface Function<T,R>		// T -> input parameter; R -> Return type  
+		{
+			R apply(T t);
+		}
+		
+	3> Consumer interface
+	+ contains abstract method accept() which accepts an input but does not return any value 
+	+ contains default method andThen() for Consumer chaining 
+	+ 	interface Consumer<T>
+		{
+			void accept(T t);
+		}
+	
+	4> Supplier interface
+	+ contains abstract method get() which takes no argument but always returns some value
+	+ 	interface Supplier<R>
+		{
+			R get();
+		}
+		
+4) Bi-Functional Interfaces:
+
+	1> BiPredicate 
+	+ 	interface BiPredicate<T,U>
+		{
+			public boolean test(T t,U u);
+		}
+	
+	2> BiFunction
+	+	interface BiFunction<T,U,R>
+		{
+			public R apply(T t,U u);
+		}
+		
+	3> BiConsumer
+	+	interface BiConsumer<T,U>
+		{
+			public void accept(T t);
+		}
+		
+5) Primitive Type Functional Interfaces:
+
+	1> Autoboxing - automatic conversion from Primitive Type to Wrapper Object by compiler 
+	
+	2> Autounboxing - automatic conversion from Wrapper object to Primitive type by compiler
+	
+	3> Generics-Type Parameter - type parameter must be only object type and cannot be primitive type 
+	
+	4> Primitive Type Functional Interfaces for 
+		- Predicate
+			+ IntPredicate
+			+ LongPredicate
+			+ DoublePredicate
+		- Function
+			-- Input type 
+				+ IntFunction<R>
+				+ LongFunction<R>
+				+ DoubleFunction<R>
+			-- Return type 
+				+ ToIntFunction<T>
+				+ ToLongFunction<T>
+				+ ToDoubleFunction<T>
+			-- Both
+				+ IntToLongFunction<T>
+				+ IntToDoubleFunction<T>
+				+ LongToInt Function<T>
+				+ LongToDouble Function<T>
+				+ DoubleToInt Function<T>
+				+ DoubleToLong Function<T>
+			-- BiFunction
+				+ ToIntBiFunction<T,U>
+				+ ToLongBiFunction<T,U>
+				+ ToDoubleBiFunction<T,U>
+		- Consumer
+			+ IntConsumer<T>
+			+ ObjIntConsumer<T>
+			+ LongConsumer<T>
+			+ ObjLongConsumer<T>
+			+ DoubleConsumer<T>
+			+ ObjDoubleConsumer<T>
+		- Supplier
+			+ IntSupplier
+			
+	5> Unary Operator - accepts only one type parameter which acts as both input and return type 
+	
+6) Method Reference:
+	- argument types must be same for both methods
+	- classname::methodname	(for static)
+	- Object_reference::methodname 	(for instance)
+	
+	Constructor Reference:
+	- classname::new 
+	
+7) Stream API:
+	- used to process elements of a collection, array or group of values
+	- belongs to java.util.stream package
+	- Stream is an interface
+	- stream() is a default method in Collection interface
+	> Configuration
+		+ Filter mechanism 
+			-- filters based on some boolean condition
+			-- public Stream filter(Predicate<T> t)
+		+ Map mechanism 
+			-- perform some operation on all elements
+			-- public Stream map(Function<T,R> f)
+	> Processing
+		+ collect() method 
+			-- used to collect processed elements
+		+ count() method
+			-- returns number of elements present in stream 
+		+ sorted() method
+			-- uses default natural sorting order
+			-- sorted(Comparator c) - for customized sorting order 
+		+ min() & max() methods
+			-- min(Comparator c) - returns minimum value according to specified comparator
+			-- max(Comparator c) - returns maximum value according to specified comparator
+		+ forEach() method 
+			-- won't return anything
+			-- applies lambda expression for each element in stream
+		+ toArray() method 
+			-- converts values to an array 
+		+ Stream.of() method
+			-- used to apply stream to arrays or groups of values (non-collections)
+			
+8) Date and Time API (Joda-Time API):
+	- created by joda.org
+	- belongs to java.time package 
+	>> LocalDate.now() -- current date
+	>> LocalTime.now() -- current time
+	>> LocalDateTime.now() -- current date and time 
+	- methods in LocalDate class
+		+ getYear()
+		+ getMonthValue()
+		+ getDayOfMonth()
+	- methods in LocalTime class
+		+ getHour()
+		+ getMinute()
+		+ getSecond()
+		+ getNano()  
+	- Month enum - contains all month names with corresponding numeric value 
+	- additional methods
+		+ of() -- provide custom date-time
+		+ plus()
+		+ plusDays(long days)
+		+ minusMonths(long months), etc.
+	- ZoneId and ZonedDateTime classes 
+	
+=================================================================================================================================================
+
+JDBC [Java Database Connectivity]:-
+
+* JSP creates View components (Presentation logic) that are viewed by users in web apps
+
+* Servlets are used for processing logic 
+
+* JDBC communicates with the DataBase
+
+* JDBC components:
+	1> Driver - translator between Java app and Database
+	2> Connection - connects Java app to DB
+	3> Statement Object - to send SQL queries and receive results from DB
+	4> Result Set - holds results of SQL queries
+	
+* JDBC API provides java.sql & javax.sql (extension) packages
+
+* Implementation of interfaces provided by JDBC API are available to us in the form of Driver software
+
+* Driver Manager 
+	- a class that belongs to java.sql package
+	- manages (register/unregister) multiple database drivers
+	- responsible to establish connection with DB using driver software 
+	
+* Driver Class is a special class present in Driver software which can be identified by some name 
+	Example- Oracle.jdbc.OracleDriver
+	
+* Types of JDBC Drivers:
+
+	- Thick Drivers - require extra components to communicate with DB
+		+ Type-1
+		+ Type-2
+		+ Type-3
+		
+	- Thin Drivers - directly communicates with DB 
+		+ Type-4 
+		
+	- 2-Tier Driver Architecture - client machine and DB machine 
+		+ Type-1
+		+ Type-2
+		+ Type-4
+	
+	- 3-Tier Driver Architecture - client machine, middleware server machine, DB machine 
+		+ Type-3
+
+	1> Type-1/JDBC-ODBC Bridge Driver
+		-- converts calls between JDBC and ODBC / acts as a bridge between JDBC and ODBC Driver 
+		-- DB independent
+		-- part of JDK, no installation required 
+		-- least performance, slowest
+		-- only works in Windows (platform-dependent)
+		-- only supported till JDK 1.7 version
+		
+	2> Type-2/Native API-Partly Java Driver 
+		-- converts JDBC calls into vendor provided DB specific native library calls
+		-- native libraries are those developed in non-java and provided by DB vendors
+		-- better performance than Type-1 
+		-- platform-dependent but available for different systems
+		-- DB dependent
+		-- only supported if DB vendor provides native libraries
+		-- Example: OCI (Oracle Call Interface) Driver provided by Oracle 
+		
+	3> Type-3/All Java Net Protocol Driver/Middleware Driver
+		-- translates calls between JDBC and Middleware server
+		-- Middleware server communicates with DB using Type-1, 2 or 4 driver 
+		-- DB independent 
+		-- platform independent
+		-- relatively low performance 
+		-- high cost 
+		-- best to use while working with multiple databases 
+		-- Example: IDS (Internet Database Access Server) Driver  
+		
+	4> Type-4/All Java Native Protocol/Pure Java/Thin Driver 
+		-- directly connects to DB and acts as translator between JDBC and DB
+		-- pure Java driver 
+		-- platform independent
+		-- best performance
+		-- called thin driver because it does not need any additional drivers/libraries
+		-- DB dependent
+		-- best to use while working with only one type of DB
+		-- Example: Thin driver by Oracle; Connect/J by MySQL 
+		
+	5> Type-5 Driver 
+		-- developed by Progress Data Direct 
+	
+* Steps to develop JDBC application:
+
+	1> Load and Register Driver 
+		- every driver software is identified by a special class called Driver Class 
+		- Load Driver Class >> Class.forName("driverClass.name");
+		- Driver registers automatically through static block in Driver class and this is done by JVM
+		- from JDBC 4.0v, driver is auto-loaded from jar file -> META_INF/Services/DriverName
+		
+	2> Establish connection between Java application and Database
+		- jdbc URL, DB username and password are required to establish connection
+		- jdbc URL syntax 
+			-- "main_protocol:sub_protocol:sub_name"
+			-- main protocol is always "jdbc"
+		>> Connection con = DriverManager.getConnection(jdbcURL, username, password); 
+	
+	3> Creation of Statement Object
+		- multiple statement objects can be associated with a single connection object
+		>> Statement st = con.createStatement();
+		
+	4> Send and execute SQL queries
+		- executeQuery(String query) 
+			-- executes SELECT queries
+			-- return type is ResultSet 
+			>> ResultSet rs = st.executeQuery("select * from table");
+		- executeUpdate(String query)
+			-- executes non-select operations (insert/update/delete)
+			-- returns number of rows affected (integer)
+			>> int rowcount = statement.executeUpdate("delete from table where ...");
+		- execute(String query)
+			-- executes both select and non-select queries
+			-- return type is boolean (true for select query; false for non-select query)
+			-- getResultSet(), getUpdateCount()
+			>> boolean b = statement.execute(query);
+			>> 	if(b==true)
+				{
+					ResultSet rs = statement.getResultSet();
+			    }
+				else
+				{
+					int rowcount = statement.getUpdateCount();
+				}
+			-- returns true -> select query executed, returns false -> non-select query executed
+		
+	5> Process results from Result Set
+		- result set follows Iterator Design Pattern
+		- only one result set can be associated with each statement object  
+		- BFR (Before First Record)
+		- ALR (After Last Record)
+		- public boolean next() - checks whether next record is available
+		- Getter methods 
+			-- getInt(), getString(), etc.
+			-- Argument - int columnIndex or String columnLabel
+			-- columnIndex starts from 1
+			-- using columnIndex is better performance wise
+		>> int index = rs.findColumn("columnName"); // find columnIndex of a column 
+			
+	6> Close connection
+		- close in reverse order 
+		>> rs.close();
+		>> st.close();
+		>> con.close();
+		- using con.close() is sufficient to close everything
+		
+	** Connection : Road
+	** Statement : Vehicle
+	** ResultSet : Box
+	** Road can have many vehicles, but each vehicle can have only one box
+	** Using try with recources to establish connection will automatically close everything
+	
+* Use String.format() to format sqlQuery with dynamic input.
+
+* If executeQuery() is used to execute non-select queries
+	- for type-1 driver, "SQLException: No result set produced" is thrown 
+	- for type-4 driver, empty result set is obtained and no exception is thrown
+	
+* If executeUpdate() is used to execute select queries
+	- for type-1 driver, "SQLException: No row count produced" is thrown 
+	- for type-4 driver, rowcount is returned without exception 
+
+* If executeUpdate() is used for DDL commands
+	- for type-1 driver, -1 is returned
+	- for type-4 driver, 0 is returned
+	
+* At DB side, DB Engine compiles and executes our SQL queries. During compilation:
+	^ Tokenization - query is divided into a stream of tokens/scanning
+	^ Parsing - stream of tokens are formed into a parse/query tree 
+	^ Query Optimization - removes unwanted operations and creates optimized query tree 
+	
+* Types of Statements in JDBC:
+	1> Statement
+	2> PreparedStatement
+	3> CallableStatement
+	- Statement (I)
+		^ PreparedStatement (I)
+			^ CallableStatement (I)
+	
+* Static Queries 
+	- direct values are passed into the parameters
+	- Example - insert into table values (value1, value2, ...)
+
+* Dynamic Queries 
+	- positional parameters/placeholders are used
+	- Example - insert into table values (?, ?, ...)
+	
+* PreparedStatement 
+	- it has better performance because it pre-compiles the query 
+	- works with both static and dynamic queries
+	- query will be compiled only once
+		-- 'n' query executions using Statement = 'n' compilations + 'n' executions
+		-- 'n' query executions using PreparedStatement = 1 compilation + 'n' executions
+	- query needs to be passed as argument only once 
+	- easy to handle date values, BLOB and CLOB
+	- prevents SQL Injection attacks
+	>> PreparedStatement pst = con.PreparedStatement(String query);
+		-- query is compiled at time of object creation of PreparedStatement
+	>> pst.executeQuery();
+	>> pst.executeUpdate();
+	>> pst.execute();
+	>> pst.setInt(position, value);
+	>> pst.setString(position, value);
+	>> pst.setDouble(position, value);
+	- Limitation: each query requires a new object 
+	
+* SQL Injection Attacks:
+	- problem which arises in DBs due to insertion of special characters at the end of input on user side
+	- can occur when using Statement object because end user input will be available during compilation of query
+	- Example: 
+		1> select count(*) from users where uname = 'name'--' and upass = 'pass';
+			-- input = name'--
+			-- "--" denotes single line comment in SQL 
+		2> select count(*) from user where uid = 777 or 1=1;
+
+* Stored Procedure 
+	- Procedures are a group of SQL Queries to perform some task that need to be executed repeatedly
+	- analogous to Java methods
+	- stored procedures are stored permanently in DB
+	- can take 3 types of parameters:
+		1) IN parameter - to provide input values
+		2) OUT parameter - to collect output values 
+		3) INOUT parameter
+	
+* Functions - similar to procedures but always returns a value 
+
+* Callable Statement 
+	- used to call stored procedures from DB
+	>> CallableStatement cst = con.prepareCall(String procedureCall);
+	
+* JDBC Types
+	- bridge types for mapping between Java data types and DB types 
+	- used only with stored procedures OUT parameters
+	>> Types.DATATYPE
+
+* Steps to call stored procedure from Java app using CallableStatement:
+	1> Ensure that stored procedure is already available in DB 
+	2> Create CallableStatement object 
+	3> Provide values for IN parameters 
+	4> Register OUT parameter with JDBC Types
+		>> cst.registerOutParameter(index, Types.DATATYPE);
+	5> Execute procedure call 
+		>> cst.execute();
+	6> Get result 
+	
+* Context Area - special memory area in DB where SQL query results are stored 
+	
+* Cursors 
+	- in Java, it allows access to objects from a collection, one after the other 
+		-- 3 types of cursors in Java:
+			1> Enumeration
+			2> Iterator
+			3> ListIterator
+	- in DB, to access results stored in Context Area 
+		-- 2 types of cursors in SQL:
+			1> Implicit Cursors 
+				(Ex:SYS_REFCURSOR - holds result set of SELECT queries, 
+					%ROWCOUNT - holds result of non-select queries,
+					%FOUND - holds boolean value whether rows have been affected due to non-select queries)				
+			2> Explicit Cursors 
+	
+* Batch Updates 
+	- grouping multiple SQL queries into a single batch and sending it to the database for execution 
+	- improves performance
+	- reduces network traffic
+	>> st.addBatch(String query)
+	>> st.executeBatch() - returns an integer array of updated row counts
+	- Limitation: 
+		-- applicable only for non-select queries, BatchUpdateException arises if non-select queries are used 
+		-- if any query execution fails, rest of the queries in the batch will not be executed
+	
+* setFetchSize() - limits number of records that are fetched from DB to Java application
+  setMaxRows() - limits number of records from DB	
+	
+* JDBC Execute Methods:
+	1> executeQuery() - executes SELECT queries and returns ResultSet 
+	2> executeUpdate() - executes non-SELECT queries and returns integer value of rows updated
+	3> execute() - executes both SELECT and non-SELECT queries and also stored procedures and returns boolean value (true for SELECT and false for non-SELECT)
+	4> executeBatch() - executes batch and returns integer array of updated row counts
+	
+* 2 Date classes available in Java:
+	> java.util.Date
+		^ java.sql.Date 
+	- recommended to use PreparedStatement to insert Date values into DB 
+	- if date is provided as user input in String format, then it needs to be converted as follows (String to Date):
+		-- String to java.util.Date format using SimpleDateFormat(java.text package)
+			>> SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			>> java.util.Date udate = sdf.parse(user_date);
+		-- java.util.Date to java.sql.Date format 
+			>> long l = udate.getTime();
+			>> java.sql.Date sDate = new java.sql.Date(l);
+	- if date provided by user input is in (yyyy-mm-dd) format, then String can be converted directly into java.sql.Date format
+		>> java.sql.Date sdate = java.sql.Date.valueOf(user_date);
+	- retrieving date in required form (Date to String)
+		>> SimpleDateFormat sdf = new SimpleDateFormat("dd-MM/MMM-yyyy");
+		>> sdf.format(rs.getDate(colIndex));
+		
+* LOBs (Large Objects):
+	1> BLOB (Binary LOB) 
+		-- images, audio, video
+		-- insert using setBinaryStream
+		-- retrieve using InputStream
+	2> CLOB (Character LOB) 
+		-- text files, xml files 
+		-- insert using setCharacterStream
+		-- retrieve using Reader
+	- max size for both = 4GB
+	- Buffer concept:
+		-- used to move multiple data items at once which will reduce number of read/write operations and improve performance
+		
+* Connection Pooling:
+	- Connection Pool is a pool of ready to use Connection objects 
+	- it allows reuse of same object multiple times and hence improves performance 
+	- Steps to implement Connection Pool:
+		1> Create DataSource object 
+			-- DataSource is an interface belonging to javax.sql package 
+			-- it manages the Connection objects in the pool 
+		2> Set JDBC properties to the DataSource object 
+			>> ds.setUrl(String url);
+			>> ds.setUser(String user);
+			>> ds.setPassword(String passwd);
+		3> Get Connection object 
+			>> Connection con = ds.getConnection();
+		
+* Properties:
+	- used to define frequently changing values instead of hardcoding it in the java source code file 
+	- ".properties" extension is recommended
+	- changes in java source code may require rebuild, redeploy and server restart, hence it is better to use properties
+	
+* Include username and password in url: "jdbc:postgresql://localhost:5432/org?user=user1&password=user1"
+		
+* Transaction Management:
+	- a transaction is group of operations that need to be executed on principle - either all or none
+	- Types of transaction
+		1> Local - all operations belong to the same DB
+		2> Global - operations belong to different DBs
+	>> con.setAutoCommit(false);
+	>> con.commit();
+	>> con.rollback();
+	- in JDBC AutoCommit is enabled by default 
+	>>  con.setAutoCommit(false);
+		try{
+			operations;
+			con.commit();
+		}
+		catch(SQLException e){
+			con.rollback();
+		}
+	- Savepoint 
+		-- in case of multiple operations, savepoint can be used to save a few operations in groups
+		-- Savepoint is an interface in java.sql 
+		>> Savepoint sp = con.setSavepoint();
+		>>  operation1
+			operation2
+			Savepoint sp = con.setSavepoint();
+			operation3
+			operation4
+			con.rollback(sp); // only operation3 and operation4 will undergo rollback 
+	- Transaction concurrency problems:
+		-- Dirty Read problem - intermediate results of a transaction are used by another transaction before it is committed
+		-- Non-repeatable Read problem - same read operation on the same transaction results in different results
+		-- Phantom Read problem 
+	- Transaction Isolation Levels - used to avoid transaction concurrency problems
+		> TRANSACTION_READ_UNCOMMITTED -> 1
+			-- before committing the transactions, its intermediate results can be used by other transactions
+		> TRANSACTION_READ_COMMITTED -> 2
+			-- ensures that only committed data can be read by other transactions
+			-- only prevents Dirty read problem
+		> TRANSACTION_REPEATABLE_READ -> 4
+			-- multiple read operations gurantee same results
+			-- prevents Dirty read and Non-repeatable read problems
+			-- default for most DBs
+		> TRANSACTION_SERIALIZED -> 8
+			-- total table will be locked for one transacton at a time
+			-- prevents all 3 problems
+			-- performance issues 
+	
+* MetaData:-
+	- data about data 
+	- 3 types:
+		1> DatabaseMetaData
+			-- interface belongs to java.sql 
+			>> DatabaseMetaData dbmd = con.getMetaData();
+			>> dbmd.getDatabaseProductName();
+		2> ResultSetMetaData
+			-- interface belongs to java.sql 
+			>> ResultSet rs = st.executeQuery(String query);
+			>> ResultSetMetaData rsmd = rs.getMetaData();
+			>> rsmd.getColumnCount();
+			>> rsmd.getColumnName(int index);
+		3> ParameterMetaData
+			-- interface belongs to java.sql
+			>> PreparedStatement pst = con.prepareStatement(String query);
+			>> ParameterMetaData pmd = pst.getParameterMetaData();
+			>> pmd.getParameterCount();
+			>> pmd.getParameterType();
+			
+* JDBC with Excel Sheets - requires Type-1 driver and DSN configuration
+
+* ResultSet Types:
+
+	- based on operations allowed
+		1> READ_ONLY (default) {static}
+			+ CONCUR_READ_ONLY = 1007
+		2> UPDATABLE {dynamic}
+			+ CONCUR_UPDATABLE = 1008
+			
+	- based on cursor movement
+	
+		1> FORWARD_ONLY (default)
+			-- can move only in forward direction
+			-- can't move randomly
+			-- low performance
+			>> rs.next()
+			>> rs.getXxx(int colIndex)
+			>> rs.getRow()
+			
+			+ TYPE_FORWARD_ONLY = 1003
+			
+		2> SCROLLABLE
+			-- can move only in forward direction and backward direction
+			-- can move randomly
+			-- higher performance
+			>> rs.next()
+			>> rs.getXxx(int colIndex)
+			>> rs.getRow()
+			>> rs.previous()
+			>> rs.beforeFirst()
+			>> rs.afterLast()
+			>> rs.first()
+			>> rs.last()
+			>> rs.absolute(int x) // if x is negative, it goes 'x' positions behind top and vice versa for positive
+			>> rs.relative(int x) // moves x positons from current position 
+			>> rs.isBeforeFirst()
+			>> rs.isAfterLast()
+			>> rs.refreshRow()
+			
+			+ TYPE_SCROLL_INSENSITIVE =1004
+				-- after obtaining ResultSet, any changes to DB will not be reflected in ResultSet
+				-- analogous to a snap shot of DB
+				-- higher performance
+			+ TYPE_SCROLL_SENSITIVE = 1005
+				-- all DB updations are available to the DB
+				-- stores direct pointer to the DB 
+				-- lower performance
+				
+	- based on holdability
+	
+		1> HOLD_CURSORS_OVER_COMMIT
+			-- ResultSet can be accessed after commit operation
+		
+		2> CLOSE_CURSORS_AT_COMMIT
+			-- ResultSet cannot be accessed after commit operation	
+	
+	>> Statement st = con.createStatement(int type, int mode);
+	>> PreparedStatement pst = con.prepareStatement(String query, int type, int mode);
+	>> dbmd.supportsResultSetType(int type)
+	>> dbmd.supportsResultSetConcurrency(int mode)
+	
+	- allowed values for type:
+		+ ResultSet.TYPE_FORWARD_ONLY -> 1003
+		+ ResultSet.TYPE_SCROLL_INSENSITIVE -> 1004
+		+ ResultSet.TYPE_SCROLL_SENSITIVE -> 1005
+		
+	- allowed values for mode:
+		+ ResultSet.CONCUR_READ_ONLY -> 1007
+		+ ResultSet.CONCUR_UPDATABLE -> 1008
+		
+* RowSet 
+	- effective alternate for ResultSet
+	- child interface of ResultSet
+	- belongs to javax.sql 
+	- scrollable by default
+	- updatable by default 
+	- serializable
+	- database connection not required
+	
+	- RowSet Types:
+		1> Connected RowSets 
+			-- requires DB connection
+			-- non-serializable
+			> JdbcRowSet (I) - similar to ResultSet but is scrollable and updatable
+		2> Disconnected RowSets 
+			-- no DB connection
+			-- serializable
+			> CachedRowSet (I) - allows multiple users across a network access records without a DB connection
+				^ WebRowSet (I) - can read/write data with XML files 
+					^ JoinRowSet (I) - join rows from different rowset into single rowset based on matched columns 
+					^ FilteredRowSet (I) - to filter rows based on some condition
+	
+	>> RowSetFactory rsf = RowSetProvider.newFactory();
+	>> JdbcRowSet jrs = rsf.createJdbcRowSet();
+	
+* RowId
+	- interface belongs to java.sql 
+	- represents unique logical address of rows which are generated automatically when a new row is inserted into the DB
+	- improves data retreival speed
+	- RowIdLifetime:
+		> ROWID_UNSUPPORTED
+		> ROWID_VALID_FOREVER
+		> ROWID_VALID_SESSION
+		> ROWID_VALID_TRANSACTION
+	
+====================================================================================================================================
+
+static methods can be inherited but not overridden
+Strings vs stringbuffer
+
+
+
+create or replace function findSal(wid integer) returns integer
+language plpgsql    
+as $$
+declare
+sal integer;
+begin
+    select salary into sal from worker where worker_id = wid ;
+	return sal;
+end $$;

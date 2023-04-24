@@ -1,0 +1,7 @@
+JASPER REPORTS:-
+
+* open source tool to generate reports 
+* offers different file formats 
+* JasperSoft provides Jasper Studio
+* Jasper reports have xml formats - jrxml extension
+* JasperCompileManager class compiles jrxml file to produce a ".jasper" file 

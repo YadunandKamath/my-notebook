@@ -1,0 +1,344 @@
+SQL [Structured Query Language]:-
+
+* SQL is a non-procedural language which communicates with the database to query, manipulate, and define data, and to provide access control.
+* the way SQL talks to databases > the way SQL builds databases
+* CRUD - Create, Read, Update, Delete
+
+* Relation (Table) - contains tuples and attributes(organized as rows and columns).
+* Tuple (Row) - set of fields which represent an object/entire data record.
+* Attribute (Column) - elements of data corresponding to the object.
+* Schema - group of tables
+* Catalog - group of schemas
+* Database - contains one or more tables. Organized collection of structured information/data. Group of catalogs.
+
+* Major DBMS:
+  - PostgreSQL - open source
+  - Oracle - commercial, enterprise
+  - MySQL - commercial open-source
+  - SqlServer
+
+* SQL Commands:
+  1) DDL [Data Definition Language] - used to define the database schema.
+     -> CREATE 
+			- used to create database/tables.
+			>> CREATE TABLE table_name(
+			column_name TYPE column_constraint,
+			column_name TYPE column_constraint,
+			table_constraint);
+			
+     -> DROP 
+			- delete database/tables/columns
+			>> DROP TABLE table_name;
+			>> ALTER TABLE table_name DROP COLUMN IF EXISTS column1;
+     -> ALTER
+			- modify structure of database/table
+			>> ALTER TABLE table_name action;
+     -> TRUNCATE - keeps table but deletes all rows/values.
+	 
+  2) DQL [Data Query Language] - used for performing queries.
+     -> SELECT - retrieve data from database.
+	 
+  3) DML [Data Manipulation Language] - deals with manipulation of data.
+     -> INSERT 
+			- insert data into table
+			>> INSERT INTO table_name (column1, column2,...) VALUES
+				('value1', 'value2', ...),
+				('value1', 'value2', ...)...;
+     -> UPDATE 
+			- update records
+			>> UPDATE table_name SET column1='value1', column2='value2',...
+				WHERE condition; 
+     -> DELETE 
+			- delete records
+			>> DELETE FROM table_name WHERE condition;
+			
+  4) DCL [Data Control Language] - deals access control.
+     -> GRANT - gives access privileges to users
+     -> REVOKE - withdraws access
+  5) TCL [Transaction Control Language] -
+     -> COMMIT - commits a Transaction.
+     -> ROLLBACK - rollbacks a transaction in case of any error occurs.
+     -> SAVEPOINT - sets a save point within a transaction.
+     -> SET TRANSACTION - Specifies characteristics for the transaction
+	 
+* DELETE can contain WHERE clause but TRUNCATE can't.
+
+* Datatypes in SQL:
+	1) Boolean
+		- true or false 
+	2) Character
+		- char, varchar, text
+	3) Numeric
+		- integer, float, serial
+	4) Temporal
+		- date, time, timestamp, interval
+	5) UUID [Universally Unique Identifiers]
+	6) Array 
+	7) JSON
+	
+
+* Keys:
+  - keys help determine relationships between objects.
+  1) PRIMARY KEY
+	- generally an integer auto-increment field used to distinguish/uniquely identify rows within a table
+	- unique and not null 
+  2) FOREIGN KEY 
+	- uniquely identifies a row in another table
+  3) LOGICAL KEY 
+	- used by the outside world for lookup (typed in search)
+	- Never use a Logical key as Primary key. Because logical keys can change.
+		Ex: Email id
+  
+
+* Database Normalization:
+  - a way of organizing the data in the database by reducing duplicates.
+  1) 1NF - tables must not contain repeating groups of data in one column.
+  2) 2NF - tables must not contain redundancy(unnecessary repeating information)
+  - Reference data (point at data) rather than replicating it.
+  - Use integers for keys and references.
+  - Add a 'key' column in every table to make references to.
+
+* ON DELETE Choices:
+  - Default/RESTRICT
+  - CASCADE
+  - SET NULL
+
+* JOIN operation - combines multiple columns from multiple tables for SELECT operation
+
+	1> INNER JOIN 
+		- all combinations that satisfy ON clause (common in both tables)
+		- table order won't matter
+		- query compares each row of table1 with each row of table2 to find all pairs of rows that satisfy the join-predicate
+		> SELECT * FROM table1 INNER JOIN table2 ON table1.col_match = table2.col_match;		(explicit)
+		> SELECT * FROM table1, table2 WHERE table1.col_match = table2.col_match;		(implicit)
+		
+		1.1) EQUI-JOIN 
+			- specific type of comparator-based join, that uses only equality (=) comparisons in the join-predicate
+			- using other comparison operators (such as <) disqualifies a join as an equi-join
+			> SELECT * FROM table1 JOIN table2 ON table1.col_match = table2.col_match;
+			
+			1.1.1) NATURAL-JOIN 
+				- special case of equi-join 
+				- result is the set of all combinations of tuples in table1 and table2 that are equal on their common attribute names
+				> SELECT * FROM table1 NATURAL JOIN table2;
+			
+		
+	2> OUTER JOIN 
+		- joined table retains each row—even if no other matching row exists
+		- no implicit join-notation for outer joins exists in standard SQL.
+		
+		2.1) FULL OUTER JOIN 
+			- creates the result-set by combining results of both LEFT JOIN and RIGHT JOIN
+			- all possible combinations
+			- table order won't matter 
+			> SELECT * FROM table1 FULL OUTER JOIN table2 ON table1.col_match = table2.col_match;
+			> SELECT * FROM table1 FULL OUTER JOIN table2 ON table1.col_match = table2.col_match 
+			  WHERE table1.id IS null OR table2.id IS null;			(opposite of inner join)
+		  
+		2.2) LEFT OUTER JOIN 
+			- returns all the rows of the table on the left side of the join and matches rows for the table on the right side of the join
+			- left outer join returns all the values from an inner join plus all values in the left table that do not match to the right table, 
+			including rows with NULL (empty) values in the link column
+			- table order matters
+			> SELECT * FROM table1 LEFT JOIN table2 ON table1.col_match = table2.col_match 
+			> SELECT * FROM table1 LEFT JOIN table2 ON table1.col_match = table2.col_match 
+			  WHERE table2.id IS null (entries unique to table1 and not found in table2, i.e only entries from table1 with no matches in table2)
+	
+		2.3) RIGHT OUTER JOIN 
+			- returns all the rows of the table on the right side of the join and matches rows for the table on the left side of the join
+			- table order matters 
+		
+	3> CROSS/CARTESIAN JOIN 
+		- all combinations	
+		- doesn't take ON clause
+		> SELECT * FROM table1 CROSS JOIN table2;	(explicit cross join)
+		> SELECT * FROM table1, table2;		(implicit cross join)
+		> SELECT * FROM table1 INNER JOIN table2 ON 1=1; 	(cross join using inner join)
+		
+	4> SELF JOIN - each row of the table is joined with itself and all other rows depending on some conditions.
+
+
+* One-to-Many relationships - foreign key column in Many table.
+* Junction/Bridge table - "connection" table with two foreign keys for Many to Many relationships. 
+  These 2 foreign keys are the primary key to this table
+
+* Reducing the result set:
+	- DISTINCT - operates on a column and returns unique rows in it 
+	- DISTINCT ON - limits to a set of columns
+	- GROUP BY - combined with aggregate functions
+		> SELECT category_col, AGG(data_col) FROM table GROUP BY category_col;
+		> Using "SELECT col FROM table GROUP BY col" is the same as using DISTINCT on col 
+	- HAVING - allows us to filter based on aggregate result along with GROUP BY
+	- LIMIT - limits the number of rows returned by the query. Goes at the end of the query statement.
+
+* ORDER BY - sort rows based on a column value either in ascending or descending order
+	> SELECT column1,column2 FROM table ORDER BY column1 ASC/DESC; 
+
+* Clauses:
+	> BETWEEN - check if values fall in between two values (inclusive)
+	> IN - check whether a value matches from a list of values 
+	> LIKE 
+		- pattern matching
+		- case-sensitive
+		- use ILIKE for case-insensitive
+		> % - matches any number of characters 
+		> _ - matches any single character 
+	> AS - create alias. Alias gets assigned at the end and hence can't be used in WHERE or HAVING clauses
+	> ON - specifies how Join must connect tables.
+
+* WHERE -> GROUP BY -> HAVING -> ORDER BY
+
+* UNION operator - combines result-set of multiple SELECT statements
+	> SELECT * FROM table1 UNION SELECT * FROM table2
+
+
+* Aggregate functions:
+  > COUNT()
+  > ROUND(value,decimal_points)
+  - Only for columns with numbers -
+  > MAX()
+  > MIN()
+  > SUM()
+  > AVG()
+  
+
+* Constraints:
+	> CONSTRAINT constraint_name UNIQUE (column1, column2, ...)
+	1) Column Constraints
+		> NOT NULL
+		> UNIQUE
+		> CHECK (column_name operator value)
+		> PRIMARY KEY
+	2) Table Constraints
+		> CHECK(condition)
+		> REFERENCES
+		> UNIQUE(column_list)
+		> PRIMARY KEY(column_list)
+		
+
+
+> DATE - contains only date
+> TIME - contains only time 
+> TIMESTAMP - contains date and time 
+> TIMESTAMPZ - contains date, time and timezone
+> SELECT NOW() - current date and time 
+> SELECT TIMEOFDAY() - current day date and time 
+> SELECT CURRENTDATE()
+> EXTRACT(day/date/dow/month/year FROM timezone_column)
+
+
+* CASE Statement and Expression:-
+
+	> CASE 
+		WHEN condition1 THEN result1
+		WHEN condition2 THEN result2
+		ELSE result3
+	  END AS label
+	  
+	> CASE expression
+		WHEN value1 THEN result1
+		WHEN value2 THEN result2
+		ELSE result3
+	  END 
+	  
+* COALESCE function 
+	- accepts unlimited number of arguments and returns first argument that is not null 
+	- returns null if all arguments are null
+	> COALESCE(arg1,arg2,...,argN)
+	- can be used to substitute some non-null value when row value is null 
+		> COALESCE(null,non-null)
+
+* CAST function 
+	> CAST(old_type AS new_type)
+	
+* NULLIF function 
+	- takes 2 arguments and returns NULL if they are equal
+	- returns first argument if unequal
+	
+* Views
+	- it is a database object that can be accessed as a virtual table 
+	- it stores the query rather than the data 
+	> CREATE VIEW view_name AS query 
+--------------------------------------------------------------------------------
+POSTGRESQL:-
+
+* Creating a User and Database:
+  > CREATE USER user_name WITH PASSWORD 'password';
+  > CREATE DATABASE db_name WITH OWNER 'user_name';
+
+* List of databases:
+  > \l
+* Connect to a database:
+  > \c database_name user_name
+* List of relations:
+  > \dt
+* Describe table:
+  > \d table_name
+* Display schema of table:
+  > \d+ table_name
+* Copy data from CSV file to Table:
+  > \copy table_name(column1,column2...) FROM 'PATH for CSV file' WITH DELIMITER ',' CSV;
+* Execute commands from a file:
+  > \i 'file'
+* Exit a session:
+  > \q
+* Clear screen:
+	>> \! cls/clear
+* Create User:
+  > CREATE USER user_name WITH 'password';
+* List all users:
+  > \du
+* Change User:
+  > SET ROLE user_name;
+* Check version:
+  > SELECT version();
+
+* Altering Schema:
+  > ALTER TABLE table_name ADD COLUMN column_name TYPE;
+  > ALTER TABLE table_name ALTER COLUMN column_name TYPE data_type;
+  > ALTER TABLE table_name DROP COLUMN column_name;
+  > ALTER SEQUENCE tablename_columnname_seq RESTART WITH anynumber;
+
+* Removing duplicates:
+  > SELECT DISTINCT column_name FROM table_name;
+
+* Foreign key referencing:
+  > column_name data_type REFERENCES table_name(column_name) ON DELETE CASCADE;
+
+* Branching:
+  > (CASE WHEN (condition)
+     THEN 'value'
+     ELSE 'value'
+     END)
+
+* Substring:
+  > SUBSTRING(column_name/value, start_index, no. of chars)
+* Length:
+  > LENGTH(column_name/value)
+* Replace:
+  > REPLACE(column_name/value, 'old_value', 'new_value')
+* Concatenation:
+  > CONCAT('value1','value2',...)
+
+Examples:
+
+> SELECT 'value' || GENERATE_SERIES(1,5);
+> SELECT column_name, aggregate_function(column_name)
+  FROM table_name
+  GROUP BY column_name
+  HAVING aggregate_function(column_name) operator value;
+
+================================================================================
+  Host:     pg.pg4e.com
+  Port:     5432
+  Database: pg4e_966e361758
+  User:     pg4e_966e361758
+  Password: pg4e_p_1d578c73e3b9040
+  psql -h pg.pg4e.com -p 5432 -U pg4e_966e361758 pg4e_966e361758
+--------------------------------------------------------------------------------
+  Host:     pg.pg4e.com
+  Port:     5432
+  Database: pg4e_a0503f7522
+  User:     pg4e_a0503f7522
+  Password: pg4e_p_4b17369c9d2ac97
+  psql -h pg.pg4e.com -p 5432 -U pg4e_a0503f7522 pg4e_a0503f7522

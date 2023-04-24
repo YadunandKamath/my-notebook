@@ -1,0 +1,977 @@
+
+
+$ RESOURCES:
+	
+	* https://start.spring.io/ = Spring Initializr
+	* https://docs.spring.io/spring-framework/docs/3.2.0.M1/reference/pdf/spring-reference.pdf = Spring Reference Manual
+	* https://hibernate.org/orm/ = Hibernate Framework Documentation
+	* https://jsonplaceholder.typicode.com/ = free fake API for testing 
+	* https://www.baeldung.com/cs/http-status-codes = HTTP Status Codes
+	
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+MAVEN:-
+
+- Project Management Tool
+- popularly for build management and dependencies
+- portable 
+- it automatically downloads required JAR files, as mentioned in config file (dependencies), from Maven Central/Local Repository
+- Spring Boot starters - collection of Maven dependencies
+
+	-- Standard Directory Structure 
+	
+		> src/main
+			^ /java - java source code 
+			^ /resources - properties/config files 
+			^ /webapp - JSP files and web config files
+			
+		> src/test - unit testing code 
+		
+		> target - destination for compiled code, automatically created by Maven 
+		
+	
+	-- POM [Project Object Model] file:
+	
+		- configuration file for project 
+		- located in root of project 
+		
+		- contains: 
+			* project meta data 
+			* dependencies 
+			* plugins 
+			
+		- project coordinates (GAV)
+			* Group ID - name of company/group/organization
+			* Artifact ID - project name 
+			* Version - release version, use SNAPSHOT if still under development
+			
+			
+	-- Maven Wrapper files:
+		- mvnw allows us to run a Maven project 
+		- automatically downloads required version of Maven and runs it 
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+SPRING & SPRINGBOOT:-
+
+- Spring helps to introduce loose coupling into our applications with the help of runtime polymorphism. 
+  
+- Spring is commonly used as a backend technology.
+
+- Spring Framework is a collection of libraries. 
+
+- Spring Boot is an automated tooling for Spring Framework applications. 
+
+- Spring Framework can be used without Spring Boot but not vice versa.
+  
+- Spring uses association (Has-A) rather than inheritance. Objects of classes can be created by using parent interface.
+
+- Spring Boot reduces Development time, Unit & Integration Test time and develops Production ready web applications very easily 
+  compared to the existing Spring Framework. 
+  
+- Spring Boot creates standalone applications with less manual configuration. Spring Boot makes it easier to use Spring.
+
+- {spring-boot-devtools} - automatically restarts application when code is updated
+
+
+	-- SOLID Principles of OOPS:
+	
+		1> Single Responsibility Principle 
+			- every class should have a single responsibility
+			- classes should be small
+			- split big classes into smaller classes 
+		
+		2> Open Closed Principle 
+			- classes should be open for extension
+			- classes should be closed for modification
+			- use private variables with getters and setters - ONLY if needed
+			- use abstract base classes 
+	
+		3> Liskov Substitution Principle
+			- Objects in a program would be replacable with instances of their subtypes without altering the correctness of the program 
+			- violations will often fail the "Is a" test
+			- Square is-a Rectangle but not vice versa 
+		
+		4> Interface Segregation Principle
+			- make client specific interfaces
+			- many client specific interfaces are better than one specific interface 
+			- minimize dependencies between components 
+		
+		5> Dependency Inversion Principle
+			- abstraction should not depend upon details
+			- details should depend upon abstraction		
+
+
+	-- DRY [Don't Repeat Yourself]
+		- define things one time
+		- avoid duplication
+		- changes happen in one place, not many 
+	
+
+	-- Spring Boot features:-
+	
+		- auto-configuration
+		- less boilerplate code
+		- provides embedded HTTP server
+		- "starter" dependencies for common components 
+
+
+	-- Spring Core Container:-
+
+		> Components:
+			* Beans
+			* Core 
+			* Context 
+			* SpEL [Spring Expression Language]
+
+		> Primary Functions:
+	
+			1) IoC [Inversion of Control]
+				- control of the application is inverted to the framework during runtime 
+				- IoC containers read XML and create objects of POJO classes and manages object lifecycles
+				- dynamic supply of parameters (Dependency Injection)
+			
+				* Core container
+					> BeanFactory(I)
+						^ XmlBeanFactory(C)
+					
+				* J2EE container
+					> ApplicationContext (I)
+						^ ConfigurableApplicationContext (I)
+							^ ClasspathXmlApplicationContext (C)
+					
+			2) Dependency Injection [DI]
+				- required dependency is injected by another object 
+				- passes required parameter values from XML to POJO classes via IoC containers
+				- DI is preferred via Interfaces rather than concrete classes 
+				- Injection Types:
+					1> Parameterized Constructors (most preferred)
+					2> Setter Methods
+				
+		> Configuring Spring Container:
+	
+			* XML Configuration file (Legacy)
+			* Java Annotations (modern)
+			* Java Source code (modern)
+			
+
+	-- Spring Autowiring:-
+	
+		- auto DI 
+		- Spring will scan for @Component and look for matching class implementation and will inject it automatically
+			
+			
+	-- Spring Beans:-
+	
+		- Java object/class managed by Spring  
+
+		> Bean Scope:
+			- refers to the lifecycle of the bean 
+			- how long the bean lives, how many instances are created, how the bean is shared
+			
+			* Singleton 
+				- Spring creates a single shared instance/object of the bean 
+				- all operations will refer the same bean 
+				- default scope 
+				
+			* Prototype 
+				- creates new bean instances for each user request 
+				- lazy by default
+				- destroy method is not called (user must clean up and release resources manually)
+				
+			(only used for web apps:)
+			
+			* Request
+				- scoped to an HTTP web request
+			
+			* Session
+				- scoped to an HTTP web session
+				
+		> Bean Lifecycle:
+		
+			-> Spring Container starts  
+			-> Beans instantiated 
+			-> Dependencies injected 
+			-> Internal Spring processing 
+			-> Custom init method 
+			-> Bean is ready for use 
+			-> Spring Container stops
+			-> Custom destroy method (not called for Prototype scope)
+			
+		> Lazy Initialization:-
+	
+			- by default, when the application starts, all beans are initialized 
+			- lazy initialization can be specified to initialize a bean only in the following cases:
+				* when it is needed for DI 
+				* when it is explicitly requested
+	
+	
+	-- Spring Boot Annotations :-
+	
+		> @SpringBootApplication [meta-annotation] 
+			^ @SpringBootConfiguration
+			^ @EnableAutoConfiguration 
+				* configures Spring based on the added jar dependencies
+			^ @ComponentScan 
+				* enables component scanning of current package
+				* to scan other packages: @SpringBootApplication(scanBasePackages={"p1","p2"})
+			
+			- behind the scenes: it creates application context, registers beans, starts Tomcat server, etc.
+		
+		> @Component 
+			- marks the class as a Spring Bean 
+		
+		> @Primary 
+			- marks a bean as the primary bean to autowire in case of multiple beans 
+		
+		> @Qualifier("beanName") 
+			- used to identify which dependency to autowire in case of multiple implementation classes/beans 
+			- higher priority than @Primary
+		
+		> @RequestHeader(“header name”) 
+			- inject the value of the header directly into your method.
+
+		> @RequestParam v/s @PathVariable for a Parameter:
+			- if a Request Parameter can be Optional, @RequestParam should be used 
+			- @PathVariableable Parameters comprise data directly from the URL and cannot be optional
+			
+		> @Lazy 
+			- specifies lazy initialization for a bean class 
+			- disabled by default
+			- global configuration to set all beans as lazy: spring.main.lazy-initialization=true
+			
+		> @Scope(ConfigurableBeanFactory.SCOPE_SCOPENAME)
+			- specifies the bean scope 
+			
+		> @PostConstruct
+			- used to mark a custom init method where we can add actions after bean creation
+			- called just after the initialization of the bean
+			
+		> @PreDestroy
+			- used to mark a custom destroy method to add actions before bean destruction
+			- called just before Spring removes a bean 
+			- not called for Prototype bean scope 
+			
+		> @Configuration 
+			- marks a configuration class which contains @Bean method definitions
+			
+		> @Bean("beanId") 
+			- used on a method that returns an object which should be registered as a Spring bean 
+			- beanId is optional 
+			
+			
+	-- Application Properties:
+	
+		- ".properties" file where Spring Boot configurations can be added 
+		
+		* Turn Off Spring Boot Banner: spring.main.banner-mode=off
+		
+		* Change Logging Level: logging.level.root=warn
+		
+		> Custom Properties:
+			* property.name = value 
+			* Inject using @Value("${property.name}")
+
+	
+	-- Useful Classes/Interfaces:
+	
+		> CommandLineRunner
+			- functional interface method: void run(String ..arg)
+			- run method is called immediately once the spring application is executed successfully
+			
+			
+----------------------------------------------------------------------------------------------------------------------
+
+Spring Boot Actuator:-
+
+- automatically exposes endpoints to monitor and manage applications
+- endpoints are prefixed with: /actuator
+
+	> /health endpoint 
+		- checks status of application
+		- exposed by default 
+	
+	> /info endpoint
+		- provides information about the application
+		- needs to be exposed in application.properties file
+		- it is empty by default and users need to add the information
+	
+	> /beans endpoint 
+		- displays information of all beans in application
+	
+	> /mappings endpoint 
+		- displays all mappings in application
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Project Lombok:-
+
+- provides annotations which help eliminate the writing of ceremonial code 
+
+> val - declares final local variable 
+> var - declares mutable local variable
+> @Getter - creates getter methods for all properties
+> @Setter - creates setter methods for all non-final properties
+> @ToString - generates toString method 
+> @NoArgsConstructor - generates no args constructor 
+> @RequiredArgsConstructor - generates a constructor for all fields that are final or marked @NotNull
+> @Data - generates typical bopilerplate code for POJOs. Combines @Getter, @Setter, @ ToString, @RequiredArgsConstructor
+> @Value - immutable variant of @Data. All fields are made private and final by default
+> @NonNull - set on a parameter of a method/constructor and throws NullPointerException if parameter is null
+> @Builder - creates builder pattern for object creation
+> @SneakyThrows - throw checked exception without declaring it in throws clause of calling method 
+> @Log - creates a Java util logger
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+JPA/HIBERNATE:-
+
+- JPA [Jakarta/Java Persistence API] is a standard API specification (not implementation) for ORM and Persistence
+
+- ORM [Object-Relation Mapping] - used to write database queries in the preferred Object Oriented Language
+
+- JPA abstracts the specifics of an ORM framework
+
+- Hibernate is the ORM framework that implements JPA for persisting/saving Java objects into the database
+
+- In Spring Boot, Hibernate is the default implementation of JPA 
+
+- Hibernate handles all the low-level SQL, thus minimizing the amount of JDBC code developed by the users 
+
+- Hibernate/JPA uses JDBC for all database communications
+
+
+	-- ACID Properties:
+	
+		> Atomicity 
+			- all operations can either be done or undone
+			
+		> Consistency 
+			- after successful completion of transaction, the data in the datastore should be reliable/consistent
+			
+		> Isolation 
+			- if two transactions are going on the same data then one transaction will not disturb the other transaction
+			
+		> Durability 
+			- after a transaction is completed, the data in the datastore will be permanent until another transaction is performed on that data
+
+
+	-- Terminologies:
+	
+		* DAO [Data Access Object]
+			- design pattern that is responsible for interfacing with database using JPA Entity Manager
+			- (Spring App) <--> (Service Layer) <--> (DAO) <--> (Database)
+	
+		* Transaction 
+			- unit of work in which all or none of the operations must be executed
+			
+		* Entity 
+			- a Java class that is mapped to a database table 
+			- annotated with @Entity
+			- must have a public/protected no-arguments constructor
+			
+		* EntityManager
+			- interface that manages entity instances lifecycle within the persistence context 
+			- EntityManager API is used to create and remove persistent entity instances, to find entities by their primary key, and to query over entities
+			- contains methods like persist(), remove(), find(), etc.
+			
+		* JPQL [JPA Query Language]
+			- query language for retrieving objects based on entity name and entities fields 
+			
+	
+	-- Annotations:
+	
+		* jakarta.persistence v/s org.hibernate.annotations 
+			- using jakarta.persistence annotations keeps the code implementation-agnostic
+			- JPA implementation can be changed later without changing the code later
+			- using org.hibernate.annotations forces the code to only work with the Hibernate framework
+	
+		> @Entity 
+			- used to map a Java class to a database table 
+		
+		> @Table(name="tableName") 
+			- specifies the table name with which the entity class is mapped 
+		
+		> @Id 
+			- marks a variable as primary key 
+
+		> @Column(name="columnName", updatable=true, nullable=false) 
+			- specifies the column with which the variable is mapped 
+			
+		> @GeneratedValue(strategy=GenerationType.AUTO)
+			- specifies the generation strategies for the primary key values 
+			- strategy - attribute which specifies the generation strategy
+			- GenerationType - enum with following values:
+			
+				* AUTO 
+					- persistence provider selects an appropriate strategy for the particular database
+					
+				* IDENTITY
+					- database generates new values using an auto-incremented database identity column with each insert operation
+					
+				* SEQUENCE
+					- uses a database sequence to generate unique values
+					
+				* TABLE
+					- it simulates a sequence by storing and updating its current value in a database table
+					
+		> @Transactional 
+			- automatic transaction management (begin and end transactions)
+			
+		> @Repository
+			- marks a class as a DAO implementation
+			
+		> @JoinTable 
+			- cross-reference table for mapping of relationship
+            - on the owning side of the relationship
+			
+		> @JoinColumn 
+			- specifies a column for entity association
+			
+		> @JoinColumns 
+			- mapping for composite foreign keys
+		
+		
+	-- Application Properties:
+	
+		> spring.datasource.url = jdbc:postgresql://localhost:5432/springdb
+		
+		> spring.datasource.username = username
+
+		> spring.datasource.password = password
+
+		> spring.jpa.hibernate.ddl-auto = CREATE 
+			* CREATE - Database tables are dropped followed by database tables creation 
+			* UPDATE - Create database tables once and keep the values 
+			
+		> spring.jpa.show-sql = true 
+
+
+	-- Basic operations
+	
+		* Saving a Java Object in the Database: 
+			> entityManager.persist(javaObject);
+
+		* Retrieving a Java Object: 
+			> Object obj = entityManager.find(Entity.class, ID);
+			
+		* Querying for Java Objects:
+			> TypedQuery<Entity> query = entityManager.createQuery("from table", Entity.class);
+			
+
+
+* Dialect in Hibernate – Dialect is a class and a bridge between Java JDBC types and SQL types, which contains mapping between 
+  java language data type and database datatype. Dialect allows Hibernate to generate SQL optimized for a particular relational 
+  database.
+
+* Session 
+	- belongs to org.hibernate.Session
+    - main runtime interface between a Java application and Hibernate.
+    - main function is to offer create, read and delete operations to instances of mapped entity classes.
+
+* Configuration 
+	- An instance of Configuration allows the application to specify properties and mapping documents to be used when creating a SessionFactory.
+    - A new Configuration will use the properties specified in "hibernate.properties" by default.
+
+* Instances exist in one of these states:
+  1) transient 
+	-- never persistent, not associated with any Session
+    -- made persistent by calling save(), persist() or saveOrUpdate()
+  2) persistent 
+	-- associated with a unique Session
+    -- made transient by calling delete()
+  3) detahced 
+	-- previously persistent, not associated with any Session
+    -- made persistent by calling update(), saveOrUpdate()
+  - save() and persist() result in an SQL INSERT, delete()in an SQL DELETE and update() or merge() in an SQL UPDATE.
+
+* Fetch mode - hibernate strategy for loading entities
+  1) Eager Loading
+  2) Lazy Loading
+
+* Query cache - if you have queries that run over and over, with the same parameters, query caching provides performance gains.
+  - Set the hibernate.cache.use_query_cache property to true
+
+* EntityManager - interface with methods to interact with persistence context.
+* Persistence Context - set of entity instances
+
+- SessionFactory represents ConnectionPool.
+- One connection per session.
+- Bridge table is owner in many to many relationships.
+- operation performed on parent table will also refelect action on associated table by using cascade all.
+- merge method brings entity from dettached state to attached state.
+- attach session object to transaction object using getCurrentSession().
+- EHCache is default cache service of hibernate.
+- Hibernate is faster than JDBC.
+- First Level Cache is enabled by default.
+
+* Datasource object is required to connect to database.
+
+* HAL explorer - web application to provide front end to browse HAL json.
+
+* AOP [Aspect-Oriented Programming] - aims to increase modularity
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+RESTful Services:-
+
+- REST API provides a lightweight approach to communicate between applications over HTTP
+
+	-- REST [Representational State Transfer]
+	
+		- Representation - JSON or XML
+		- State Transfer - via HTTP 
+		- REST APIs use HTTP methods to create, manage and delete server resources
+		- REST is programming language independent
+		- REST supports all data formats		
+		- Resources are typically data structures represented by JSON or XML 
+		- HTTP status codes are used to communicate success, failure or errors
+		- REST is not a formal standard
+		- RESTful services use URIs to name resources
+		
+		> RESTful Terminologies:
+			* Verbs - HTTP methods
+			* Messages - payload (JSON/XML)
+			* URI [Uniform Resource Identifier] - uniquely identifies a resource 
+			* URL [Uniform Resource Locator] - a URI with network information
+			* Stateless - the service does not maintain any client state 
+			* HATEOS - Hypermedia As The Engine Of Application State 
+
+
+	-- HTTP [Hyper Text Transfer Protocol]
+	
+		- started on telnet protocol
+		- REST communicates with apps using HTTP Request and Response messages  
+		
+		> Request Methods:
+		
+			* Safe methods (S) - only fetch information and do not cause any changes on the server 
+			* Idempotent methods (I) - repititions of the action have no further effects on the outcome
+			* Non-Idempotent methods (NI)
+			* Request Body (RQ)
+			* Response Body (RS)
+			
+			-> GET (S)(I)(RS) - request for resources from a server (read only)
+			-> HEAD (S)(I) - request for meta information without body
+			-> POST (NI)(RQ)(RS) - create request to post data to a server
+			-> PUT (I)(RQ)(RS) - create(if not found)/update(if found) request for enclosed entity to be stored at supplied URI
+			-> DELETE (I)(RS) - deletes the specified resource 
+			-> PATCH (NI)(RS)(RQ) - applies partial modifications to the specified resource 
+			-> TRACE (S)(I)(RS) - will echo the received request 
+			-> OPTIONS (S)(I)(RS)(RQ) - returns HTTP methods supported by the server for the specified URL 
+			-> CONNECT (RS)(RQ) - converts HTTPS request to a transparent TCP/IP tunnel through an unencrypted HTTP proxy
+		
+		
+		> Status Codes:
+	
+			-> 100 series - informational in nature
+		
+			-> 200 series - indicate successful requests 
+				* 200 OK
+				* 201 Created
+				* 202 Accepted
+				* 204 Accepted
+			
+			-> 300 series - redirections
+				* 301 Moved Permanently
+			
+			-> 400 series - client errors
+				* 400 Bad Request
+				* 401 Unauthorized
+				* 403 Forbidden
+				* 404 Not Found
+				* 405 Method Not Allowed
+			
+			-> 500 series - server errors 
+				* 500 Internal Server Error
+				* 503 Service Unavailable
+		
+		
+		> HTTP Request Message:
+		
+			* Request Line 
+				- HTTP command 
+			
+			* Header variables
+				- request metadata
+			
+			* Request Body 
+				- contents of message 
+				
+				
+		> HTTP Response Message:
+		
+			* Response Line 
+				- server protocol and status code 
+				
+			* Header variables
+				- response metadata
+			
+			* Request Body 
+				- contents of message 
+				
+				
+		> MIME Content Type 
+		
+			- MIME [Multipurpose Internet Mail Extension]
+			- describes message format 
+			- Syntax: type/sub-type 
+			- Examples: text/plain, text/html, application/json, application/xml, etc.
+	
+	-- JSON [JavaScript Object Notation]:
+	
+		- lightweight data format for storing and exchanging data 
+		- language independent
+		
+		-> { } 
+			* curly braces define objects in JSON 
+			
+		-> "name" : value 
+			* object members are name-value pairs delimited by colons
+			* name is always in double-quotes
+			
+		-> "name" : [value1, "value2", ...]
+			* arrays use square brackets
+			
+		> Java JSON Data Binding:
+			
+			* Data binding is the process of converting JSON data to Java POJO 
+			
+			* Marshalling 
+				- converting Java POJOs to JSON/XML while returning Java objects from REST controller
+
+			* Unmarshalling 
+				- converting JSON/XML to Java objects while passing JSON data to REST controller
+			
+			* Jackson
+				- default software used by Spring for Marshalling and Unmarshalling
+				- performs Marshalling by calling the appropriate getter methods 
+				- performs Unmarshalling by calling the appropriate setter methods 
+	
+	
+	-- Richardson Maturity Model [RMM]:
+	
+		- a model used to describe the quality of a RESTful service
+		- RMM Levels
+		
+		> Core Technologies
+			* Hypermedia
+			* HTTP 
+			* URI 
+			
+		-> Level 3: Hypermedia Controls {provides discoverability for API}
+			-- helps client developers explore the resource
+			-- Spring provides implementation of HATEOS
+			
+		-> Level 2: HTTP Verbs {introduces verbs to implement actions}
+			-- used with URIs for desired action 
+			
+		-> Level 1: Resources {breaks large services into distinct URIs}
+			-- uses multiple URIs to identify specific resources 
+			-- uses single method (GET)
+			
+		-> Level 0: The Swap of POX
+			-- POX - PLain Old XML 
+			-- uses implementing protocol as a transport protocol 
+			-- uses one URI and one kind of method 
+			-- Examples - RPC, SOAP, XML-RPC
+
+
+	-- Terminologies:
+	
+		> Spring Data JPA 
+			- provides interfaces which can be extended to get CRUD operations 
+			
+		> Spring Data REST 
+			- generates endpoints automatically that are HATEOS compliant
+			- HATEOS provides response meta-data 
+			- advanced features:
+				-> Pagination 
+					* by default, Spring Data REST returns first 20 elements, i.e., Page Size = 20
+					* different pages of data can be navigated using query parameter:- localhost:8080/endpoint?page=0
+					* page properties can also be configured in properties file 
+				-> Sorting
+					* sort by the property names of the entity 
+					* ascending order is default
+					* specify property name in query parameter:- localhost:8080/endpoint?sort=propertyName1,propertyName2,desc 
+				-> searching
+				-> extending and adding custom queries with JPQL 
+				-> Query Domain Specific Language [QDSL]
+			
+		> 
+
+	-- Annotations:
+	
+		> @RestController
+			- RESTful Web Service Controller
+			- takes care of mapping request data to the defined request handler method
+			- handler methods return the JSON/XML response directly to the client rather than using view resolvers
+			- it is a combination of the following annotations:
+			
+			^ @Controller
+				- Spring MVC Controller
+				- a specialization of the @Component class so that it is auto-detected through the classpath scanning
+				- used in combination with a @RequestMapping annotation for request handling methods
+				- handler method returns the response “view name” which is resolved to a view technology file (JSP/FTL) by view resolver
+				
+			^ @ResponseBody
+				- annotated on the request handling method
+				- enables automatic serialization of the return object into the HttpResponse
+				
+		> @RequestMapping
+			- used to map web requests onto specific handler classes/methods
+			
+		> @GetMapping, @PostMapping, @PutMapping, @PatchMapping, @DeleteMapping
+			- maps specific HTTP method requests onto specific handler methods
+			- more specific versions of @RequestMapping
+				
+		> @PathVariable(value="uriTemplateVariable", required=false)
+			- used to extract value of template variables in the request URI mapping and assign their values to method variables
+			- URI template is a URI-like String that contains variables enclosed by braces ({, })
+			
+		> @RequestBody
+			
+		> @ExceptionHandler
+			- used on methods that capture and handle exceptions and translate them to HTTP responses 
+			- Drawback: if declared locally within a Controller, it only handles exceptions raised by @RequestMapping methods of that controller
+			
+		> HandlerExceptionResolver (I):
+			- resolves any exception thrown by the application
+			^ ExceptionHandlerExceptionResolver
+			^ DefaultHandlerExceptionResolver
+				- translates Spring MVC exceptions to specific error status codes
+				- Limitation: can't set body response
+			^ ResponseStatusExceptionResolver
+				- handles exceptions by setting the status of the response accordingly
+			
+		> @ResponseStatus 
+			- set desired HTTP status for custom exception classes 
+		
+		> @ControllerAdvice 
+			- used on a class to implement it as a global exception handler (handles exceptions from @RequestMapping methods from any controller)
+			- consolidates multiple, scattered @ExceptionHandler methods into a single, global error handling component
+			- provides control over the body of the response and the status code.
+			- a specialization of the @Component class so that it is auto-detected through the classpath scanning	
+
+		> @Repository
+			
+		> @Service
+			- used on the service implementation where business logic is defined 
+			- a specialization of the @Component class so that it is auto-detected through the classpath scanning
+			
+		> @RepositoryRestResource(path="pathName")
+			
+		
+	-- Application Properties:
+	
+		> spring.data.rest.base-path = /endpoint 
+			* Spring Data REST property to set base-path 
+			
+		> spring.data.rest.default-page-size = 25
+			* if not set, default is 20
+			
+		> spring.data.rest.max-page-size = 50
+		
+	-- Useful Classes/Interfaces:
+	
+		> ResponseEntity
+				
+		> JpaRepository
+				
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Spring MVC:-
+
+* software design pattern to separate and reuse components responsible for View, Directing the request and the business logic of an application.
+
+* MVC [Model View Controller]
+	- MVC is a common design pattern for GUI and Web Applications
+		-- Model - simple POJO with properties
+		-- View - data requested by client in the form of HTML/JSON/XML/text implemented using JSP, Thymeleaf, etc.
+		-- Controller - Java class that receives client request and handles request mapping. It usually works with a service that contains business logic.
+	> Web container
+		^ WebApplicationContext (I)
+			^ WebApplicationContextUtil (C)
+
+* The components are:-
+
+	+ Model 
+		- central component of the pattern
+		- it is the application's dynamic data structure, independent of the user interface 
+		- it directly manages the data, logic and rules of the application
+
+	+ View 
+		- Any representation of information such as a chart, diagram or table.
+		- Multiple views of the same information are possible, such as a bar chart for management and a tabular view for accountants.
+
+	+ Controller 
+		- Accepts input and converts it to commands for the model or view.
+
+	+ Front Controller 
+		- Provides a centralized request handling mechanism so that all requests will be handled by a single handler
+		- Spring MVC has a single Controller, the DispatcherServlet, that provides a single point of entry into a Spring Web Application.
+
+	+ HandlerMapping 
+		- The DispatcherServlet passing requests to the Controllers with the help of handler mappings
+		- HandlerMapping Interface has several implementations, such as the class SimpleUrlHandlerMapping 
+		- SimpleUrlHandlerMapping class allows for direct and declarative mapping between Controller methods and URLs
+
+	>> @RestController [stereotype annotation] Web @Controller, so Spring considers it when handling incoming web requests.
+
+	>> @RequestMapping annotation provides “routing” information.
+	
+	- URL Templates - URL’s with placeholders in them for data. These are used by @PathVariable annotated method arguments to extract 
+  the data from the URL and inject it into the RestController method.
+	
+* Change server properties in application.properties file:
+	> server.port = 8081
+	> server.servlet.context-path = /custom_name 
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Exception Handling with Spring MVC:-
+
+* Standard Exceptions are handled by DefaultHandlerExceptionResolver (sets appropriate HTTP status code but does not write content in response body)
+
+> @ExceptionHandler 
+> BasicErrorController - provides additional error response customization
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+Spring MockMVC Test with Mockito:-
+
+-- Types of tests:
+	
+	1> Unit Tests 
+		- designed to test specific sections of the code 
+		- Coverage - percentage of lines of code tested. Ideally 70-80%
+		- no external dependencies
+		- small, fast, detailed and specific 
+	
+	2> Integration Tests 
+		- designed to test behavior between objects and parts of overall system 
+		- larger scope
+		- can include external dependencies
+		- runs slower than unit tests 
+		
+	3> Functional Tests 
+		- testing the live running application
+		- functional touch points are tested (using web driver, calling web services, etc.)
+
+* JUnit tests are not sufficient to test MVC framework interaction
+
+-- Spring MockMVC: 
+	- testing environment for testing of Spring MVC controllers
+	- provides mocks of Servlet runtime environment (HTTP Request/Response, DispatcherServlet, etc.)
+	- Unit test when run without Spring context
+	- Integration test when run with Spring context
+	
+-- Spring Boot Test Splices:
+	- Test Splices bring up a targeted segment of the Auto-Configured Spring Boot Environment (just database components/just web components)
+	- User defined Spring beans are not typically initialized
+	>> @WebMvsTest - Spring Boot Test Splice which creates a MockMVC environment for the controller
+	- dependencies of controllers are not included 
+	
+-- Using Mocks:
+	- Controller dependencies must be added to the Spring context in the test environment
+	- Dependencies can be any proper implementation
+	- Mock objects are commonly used during testing
+	- Mocks allow supply of a specific response for a given input
+	
+-- Mockito 
+	- popular mocking framework for testing Java 
+	- Mocks (aka Test Doubles) are alternate implementations of objects to replace real objects in tests 
+	- works well with Dependency Injection 
+	- for the class under test, injected dependencies can be mocks 
+	- types of mocks:
+		+ Dummy - object used just to get the code to compile 
+		+ Fake - object that has implementation but not production ready 
+		+ Stub - object with pre-defines answers to method calls 
+		+ Mock - object with pre-defines answers to method calls, and has expectations of executions
+		+ Spy - wrappers around actual object 
+	- Verify - used to verify number of times a mocked method has been called
+	- Argument Matcher - matches arguments passed to Mocked Method and will allow or disallow
+	- Argument Captor - captures arguments passed to a Mocked method 
+	
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+Spring Data JPA with Spring MVC:-
+
+* Data Transfer Objects [DTOs]
+	- simple Java POJOs
+	- data structures without behavior
+	- DTOs are objects used to transfer data between producer and consumer
+	- Database Entities can leak data to client tier, hence DTOs are preferred 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring Boot Security:-
+
+- implemented using Servlet filters in the background to pre/post-process web requests
+- Servlet filters can route web requests based on security logic 
+- prompts user login to authenticate users in order to provide authorized access to application endpoints
+
+- default username: user
+- default password: generated in console while running the app 
+
+
+	-- Declarative Security:
+		* defines application's security constraints in configuration 
+		> @Configuration - all Java config 
+		
+	-- Programmatic Security:
+		* Spring Security provides an API for custom application coding
+		* provides more customization 
+
+	-- Configurations in application.properties file:
+		> spring.security.user.name = username 
+			- set custom username 
+		> spring.security.user.password = password
+			- set custom password 
+	
+	
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Run Spring Boot from Command-Line:-
+
+1) Use "java -jar appname.jar"
+
+2) Use SpringBoot Maven Plugin
+	> ./mvnw package
+	> ./mvnw spring-boot:run 
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring Cloud:
+	
+* Enterprise applications are comprised of 3 parts:
+	1) Front End
+	2) Service Component [monolithic]
+	3) Database Component [monolithic]
+
+* Monolithic - consists of a single executable unit. It puts all functionalities into one process.
+
+* Microservice architecture style 
+	- applications are built via a suite of services responsible for specific functionalities.
+	- it aims to make individual components independently scalable, upgradable and replacable.
+	- it puts each functionality into a separate service.
+	
+* Eureka is a REST based service used to locate services for the purpose of load balancing.
+	- These services contain a Registry of services that have registered themselves to be available to the Eureka instance.
+	- Eureka Clients fetch Registry information from Eureka Server
+
+* Hystrix - Circuit Breaker library from Netflix
+		  - isolates points of access between services and prevents cascading failures
+		  - @EnableCircuitBreaker annotation 
+
+=================================================================================================================================================
+
+
+The accepted certificate will be saved in truststore 
+C:\Users\ykamath\AppData\Roaming\JetBrains\IdeaIC2022.3\ssl\cacerts with the default password changeit

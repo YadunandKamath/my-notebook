@@ -1,0 +1,124 @@
+* Data Structure - organizes and stores data.
+
+* Algorithm - describes the steps required to do a  task.
+
+* Types of Complexity:
+	1) Time Complexity - number of steps required to run an algo.
+	2) Memory Complexity - amount of memory required to run an algo.
+
+* Big O Notation - way of expressing the complexity related to the number of items the algo has to deal with.
+	O(1) = Constant Time Complexity
+	O(n) = Linear Time Complexity
+	O(n^2) = Quadratic Time Complexity
+	O(logn) = Logarithmic Time Complexity
+	O(nlogn) = n log-star n Time Complexity
+
+https://en.wikipedia.org/wiki/Big_O_notation#/media/File:Comparison_computational_complexity.svg
+
+* Arrays
+  - not dynamic
+  - stored as a contiguous block in memory
+  - every element occupies same amount of space in memory
+  - array of objects store reference to those objects
+  - retrieval of element with index = O(1)
+  - retrieval of element without index/add element = O(n)
+  
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+SORTING ALGORITHMS:-
+
+* Stable Sort - preserves the relative ordering of duplicate items.
+
+* In-place algorithms - do not require additional/temporary arrays. All operations are performed on the input array itself.
+
+1) Bubble Sort
+  - compare neighboring elements in the array and swap to get larger element on right side (sorted side) of array.
+  - in-place algo
+  - Quadratic Time Complexity = O(n^2)
+  - stable sort
+
+2) Selection Sort
+  - find largest element and swap with last unsorted index.
+  - doesn't require as much swapping as bubble sort
+  - in-place algo
+  - Quadratic Time Complexity = O(n^2)
+  - unstable sort
+
+3) Insertion Sort
+  - first element is part of sorted side and next element is compared with sorted element, if smaller it is shifted to the left.
+  - in-place algo
+  - Quadratic Time Complexity = O(n^2)
+  - stable sort
+
+4) Shell Sort
+  - variation of insertion sort
+  - aims to reduce the amount of shifting required
+  - uses larger gap to compare elements and gap reduces after every round
+  - usually performs better than Insertion Sort
+  - in-place algo
+  - worst case: Quadratic Time Complexity = O(n^2)
+  - unstable sort
+
+5) Merge Sort
+  - divide and conquer
+  - recursive algo
+  - 2 phases: splitting and merging
+  - not in-place, uses temporary arrays
+  - O(nlogn)-base 2
+  - stable sort
+
+6) Quick Sort
+  - in-place algo
+  - O(nlogn)-base 2
+  - unstable sort
+
+7) Counting Sort
+  - makes assumptions about data and doesn't use comparisons
+  - only works with non-negative numbers
+  - input array is traversed and occurence of each value is tracked in a counting array. Using the counting array the values are written in sorted order.
+  - best to use when range of values is roughly equivalent to the number of values that need to be sorted
+  - not in-place algo
+  - Linear time complexity = O(n)
+  - needs extra steps to be made stable
+  
+8) Radix Sort
+  - makes assumptions about data and data must be integers or strings
+  - data must have same radix and width
+  - sort based on position of digits and it starts with rightmost position
+  - stable counting sort is usually used for sorting
+  - may or may not be in-place 
+  - can achieve Linear time complexity = O(n)
+  - stable sort 
+  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+LISTS:-
+
+* Abstract Data Type 
+  - doesn't dictate how data is organised
+  - dictates the operations that can be performed
+  - usually an interface
+  
+https://docs.oracle.com/javase/9/docs/api/java/util/List.html
+
+https://docs.oracle.com/javase/9/docs/api/java/util/ArrayList.html
+  
+* Vectors provide synchronization and thread safety while ArrayLists do not.
+
+* Singly Linked Lists 
+	- each item is called a Node and points to next node 
+	- first item => head node
+	- constant time complexity = O(1)
+
+* Doubly Linked Lists 
+	- each Node points to previous and next nodes 
+	- first item => head node; last item => tail node 
+	- 
+	
+* Stack
+	- abstract data type
+	- Last In First Out (LIFO)
+	- push - add item to top of stack
+	- pop - remove top item 
+	- peek - get top item without popping it 
+	
